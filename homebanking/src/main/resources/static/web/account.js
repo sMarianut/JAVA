@@ -2,12 +2,11 @@ const { createApp } = Vue
 createApp({
     data() {
         return {
-            clients: null,
-            accounts: null,
-            firstName: '',
-            creationDate: '',
-            number: '',
-            balance: Number
+            client: [],
+            accounts: [],
+            idAccount: null,
+            transactions: [],
+            details: null,
         }
     },
     created() {
@@ -17,11 +16,18 @@ createApp({
         loadData() {
             axios.get('http://localhost:8080/api/clients/1')
                 .then(res => {
-                    this.clients = res
-                    this.firstName = this.clients.data.firstName
-                    this.accounts = this.clients.data.accounts
+                    this.client = res.data
+                    const par = location.search
+                    const searchP = new URLSearchParams(par)
+                    this.idAccount = searchP.get('id')
+                    for (const acc of this.client.accounts) {
+                        this.accounts.push(acc)
+                    }
+                    this.details = this.accounts.find(account => account.id == this.idAccount)
+                    for (const transacs of this.details.transactions) {
+                        this.transactions.push(transacs)
+                    }
                 })
-                .catch(error => console.error(error))
         }
     }
 }).mount('#app')

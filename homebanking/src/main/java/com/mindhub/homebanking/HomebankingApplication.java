@@ -42,8 +42,7 @@ public class HomebankingApplication {
 			accountRepository.save(account2);
 			account1.addTransaction(transaction1);
 			account1.addTransaction(transaction2);
-			transactionRepository.save(transaction1);
-			transactionRepository.save(transaction2);
+
 
 			Client client2 = new Client("Marianut", "Makanouchi",  "Ippo@Hajime.com");
 			Account account3 = new Account("VIN003",this.creationDate,50000);
@@ -53,6 +52,8 @@ public class HomebankingApplication {
 			clientRepository.save(client2);
 			accountRepository.save(account3);
 			accountRepository.save(account4);
+			transactionRepository.save(transaction1);
+			transactionRepository.save(transaction2);
         };
 	}
 }
