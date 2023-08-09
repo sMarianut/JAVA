@@ -20,6 +20,7 @@ createApp({
                     this.clients = res
                     this.firstName = this.clients.data.firstName
                     this.accounts = this.clients.data.accounts
+                    localStorage.setItem('client', JSON.stringify(this.clients))
                 })
                 .catch(error => console.error(error))
         }

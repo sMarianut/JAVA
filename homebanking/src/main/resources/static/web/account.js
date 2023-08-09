@@ -7,6 +7,9 @@ createApp({
             idAccount: null,
             transactions: [],
             details: null,
+            date: null,
+            hour: null,
+            dateForm: {}
         }
     },
     created() {
@@ -14,20 +17,23 @@ createApp({
     },
     methods: {
         loadData() {
-            axios.get('http://localhost:8080/api/clients/1')
+            const par = location.search
+            const searchP = new URLSearchParams(par)
+            this.idAccount = searchP.get('id')
+            axios.get('http://localhost:8080/api/accounts/' + this.idAccount)
                 .then(res => {
-                    this.client = res.data
-                    const par = location.search
-                    const searchP = new URLSearchParams(par)
-                    this.idAccount = searchP.get('id')
-                    for (const acc of this.client.accounts) {
-                        this.accounts.push(acc)
-                    }
-                    this.details = this.accounts.find(account => account.id == this.idAccount)
-                    for (const transacs of this.details.transactions) {
+                    this.accounts = res.data
+                    console.log(this.accounts);
+                    for (const transacs of this.accounts.transactions) {
                         this.transactions.push(transacs)
                     }
+                    this.date = this.transactions.map(tr => tr.date.slice(0, -16))
+                    this.hour = this.transactions.map(tr => tr.date.slice(11, -7))
+                    this.dateForm.hour = this.hour
+                    this.dateForm.date = this.date
+                    this.transactions.sort((a, b) => b.id - a.id)
                 })
-        }
+        },
+
     }
 }).mount('#app')
