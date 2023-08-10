@@ -1,19 +1,22 @@
 package com.mindhub.homebanking;
 
-import com.mindhub.homebanking.models.Client;
-import com.mindhub.homebanking.models.Transaction;
-import com.mindhub.homebanking.models.Account;
-import com.mindhub.homebanking.models.transactionType;
+import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.repositories.LoanRepository;
 import com.mindhub.homebanking.repositories.TransactionRepository;
 import com.mindhub.homebanking.repositories.AccountRepository;
+import com.sun.istack.NotNull;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 @SpringBootApplication
@@ -28,13 +31,17 @@ public class HomebankingApplication {
 		SpringApplication.run(HomebankingApplication.class, args);
 	}
 	@Bean
-	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository) {
+	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository) {
 		return (args) -> {
 			Client client1 = new Client("Melba", "Morel", "melbax@gmail.com");
 			Account account1 = new Account("VIN001", creationDate, 5000);
 			Account account2 = new Account("VIN002", creationDate2, 7000);
 			Transaction transaction1 = new Transaction(2000, "Other", date, transactionType.CREDIT );
 			Transaction transaction2 = new Transaction(-1500, "Others", date2, transactionType.DEBIT);
+			Loan loan1 = new Loan("Hipotecary", 500000, Arrays.asList(12,24,36,48,60));
+			Loan loan2 = new Loan("Personal", 100000, Arrays.asList(6,12,24));
+			Loan loan3 = new Loan("Automotive", 300000, Arrays.asList(6,12,24,36));
+
 			client1.addAccount(account1);
 			client1.addAccount(account2);
 			clientRepository.save(client1);
@@ -42,6 +49,10 @@ public class HomebankingApplication {
 			accountRepository.save(account2);
 			account1.addTransaction(transaction1);
 			account1.addTransaction(transaction2);
+			loanRepository.save(loan1);
+			loanRepository.save(loan2);
+			loanRepository.save(loan3);
+
 
 
 			Client client2 = new Client("Marianut", "Makanouchi",  "Ippo@Hajime.com");
