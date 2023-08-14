@@ -2,9 +2,13 @@ package com.mindhub.homebanking.dtos;
 
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.models.Account;
+import com.mindhub.homebanking.models.ClientLoan;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toSet;
 
 public class ClientDTO{
     private long id;
@@ -12,17 +16,13 @@ public class ClientDTO{
     private String lastName;
     private String email;
 
-    private Set<AccountDTO> accounts = new HashSet<>();
+    private Set<AccountDTO> accounts;
+    private Set<ClientLoanDTO> loans;
+
 
     public ClientDTO() {
     }
 
-    public ClientDTO(long id, String firstName, String lastName, String email) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-    }
     public ClientDTO(Client client) {
 
         this.id = client.getId();
@@ -33,10 +33,10 @@ public class ClientDTO{
 
         this.email = client.getEmail();
 
-        this.accounts = new HashSet<>();
-        for (Account acc: client.getAccounts()) {
-            this.accounts.add(new AccountDTO(acc));
-        }
+        this.accounts = client.getAccounts().stream().map(account -> new AccountDTO(account)).collect(toSet());
+
+        this.loans = client.getClientLoans().stream().map(clientLoan -> new ClientLoanDTO(clientLoan)).collect(toSet());
+
 
     }
 
@@ -48,16 +48,9 @@ public class ClientDTO{
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
 
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -68,11 +61,7 @@ public class ClientDTO{
         return accounts;
     }
 
-    public void setAccounts(Set<AccountDTO> accounts) {
-        this.accounts = accounts;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public Set<ClientLoanDTO> getLoans() {
+        return loans;
     }
 }

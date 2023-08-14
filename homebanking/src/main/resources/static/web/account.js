@@ -27,7 +27,7 @@ createApp({
                     for (const transacs of this.accounts.transactions) {
                         this.transactions.push(transacs)
                     }
-                    this.date = this.transactions.map(tr => tr.date.slice(0, -16))
+                    this.date = this.transactions.map(tr => tr.date.slice(0, -16).replace(/-/g, '/'))
                     this.hour = this.transactions.map(tr => tr.date.slice(11, -7))
                     this.dateForm.hour = this.hour
                     this.dateForm.date = this.date
