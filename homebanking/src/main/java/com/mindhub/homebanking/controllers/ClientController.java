@@ -19,11 +19,16 @@ public class ClientController {
     private ClientRepository clientRepository;
     @RequestMapping("/api/clients")
     public List<ClientDTO> getClients(){
-        return clientRepository.findAll().stream().map(ClientDTO::new).collect(toList());
+        return clientRepository.findAll()
+                .stream()
+                .map(client -> new ClientDTO(client))
+                .collect(toList());
     }
     @RequestMapping("/api/clients/{id}")
     public ClientDTO getClient(@PathVariable Long id){
-        return clientRepository.findById(id).map(client -> new ClientDTO(client)).orElse(null);
+        return clientRepository.findById(id)
+                .map(client -> new ClientDTO(client))
+                .orElse(null);
     }
 
 }

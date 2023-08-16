@@ -2,13 +2,11 @@ package com.mindhub.homebanking;
 
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.*;
-import com.sun.istack.NotNull;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -26,12 +24,19 @@ public class HomebankingApplication {
 		SpringApplication.run(HomebankingApplication.class, args);
 	}
 	@Bean
-	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRespository clientLoanRepository) {
+	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRespository clientLoanRepository, CardRepository cardRepository) {
 		return (args) -> {
 			Client client1 = new Client("Melba", "Morel", "melbax@gmail.com");
 			Client client2 = new Client("Ippo", "Makanouchi",  "Ippo@Hajime.com");
 			clientRepository.save(client1);
 			clientRepository.save(client2);
+			Card debitCard = new Card(client1.getFirstName()+ " " +client1.getLastName(), CardType.DEBIT,CardColor.GOLD,
+					"4342-4234-5667-3456",666,this.creationDate.plusDays(3),
+					this.creationDate.plusDays(3).plusYears(5));
+			Card creditCard = new Card(client1.getFirstName()+" "+ client1.getLastName(), CardType.CREDIT, CardColor.TITANIUM,
+					"8968-3524-7246-9164", 777, this.creationDate.plusDays(7),this.creationDate.plusDays(7).plusYears(8));
+			Card debitCard2 = new Card(client2.getFirstName()+" "+ client2.getLastName(),CardType.DEBIT,CardColor.SILVER,"1234-4567-6789-1011",333,this.creationDate.plusDays(7),
+					this.creationDate.plusDays(7).plusYears(5));
 			Account account1 = new Account("VIN001", creationDate, 5000);
 			Account account2 = new Account("VIN002", creationDate2, 7000);
 			Account account3 = new Account("VIN003",this.creationDate,51000);
@@ -59,6 +64,9 @@ public class HomebankingApplication {
 			client1.addAccount(account2);
 			client2.addAccount(account3);
 			client2.addAccount(account4);
+			client1.addCards(debitCard);
+			client1.addCards(creditCard);
+			client2.addCards(debitCard2);
 
 			client1.addClientLoans(clientLoan1);
 			client1.addClientLoans(clientLoan2);
@@ -71,6 +79,9 @@ public class HomebankingApplication {
 			accountRepository.save(account2);
 			accountRepository.save(account3);
 			accountRepository.save(account4);
+			cardRepository.save(debitCard);
+			cardRepository.save(creditCard);
+			cardRepository.save(debitCard2);
 
 			account1.addTransaction(transaction1);
 			account1.addTransaction(transaction2);
