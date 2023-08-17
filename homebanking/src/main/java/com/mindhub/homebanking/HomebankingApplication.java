@@ -15,10 +15,10 @@ import java.util.*;
 @SpringBootApplication
 public class HomebankingApplication {
 
-	LocalDate creationDate = LocalDate.now();
-	LocalDate creationDate2 = LocalDate.now().plusDays(1);
-	LocalDateTime date = LocalDateTime.now();
-	LocalDateTime date2 = LocalDateTime.now().plusHours(2);
+	private LocalDate creationDate = LocalDate.now();
+	private LocalDate creationDate2 = LocalDate.now().plusDays(1);
+	private LocalDateTime date = LocalDateTime.now();
+	private LocalDateTime date2 = LocalDateTime.now().plusHours(2);
 
 	public static void main(String[] args) {
 		SpringApplication.run(HomebankingApplication.class, args);
@@ -30,12 +30,13 @@ public class HomebankingApplication {
 			Client client2 = new Client("Ippo", "Makanouchi",  "Ippo@Hajime.com");
 			clientRepository.save(client1);
 			clientRepository.save(client2);
-			Card debitCard = new Card(client1.getFirstName()+ " " +client1.getLastName(), CardType.DEBIT,CardColor.GOLD,
+			Card debitCard = new Card("Melba GGEz", CardType.DEBIT,CardColor.GOLD,
 					"4342-4234-5667-3456",666,this.creationDate.plusDays(3),
 					this.creationDate.plusDays(3).plusYears(5));
-			Card creditCard = new Card(client1.getFirstName()+" "+ client1.getLastName(), CardType.CREDIT, CardColor.TITANIUM,
+			Card creditCard = new Card("Melba GGEz", CardType.CREDIT, CardColor.TITANIUM,
 					"8968-3524-7246-9164", 777, this.creationDate.plusDays(7),this.creationDate.plusDays(7).plusYears(8));
-			Card debitCard2 = new Card(client2.getFirstName()+" "+ client2.getLastName(),CardType.DEBIT,CardColor.SILVER,"1234-4567-6789-1011",333,this.creationDate.plusDays(7),
+			Card debitCard2 = new Card("Melba GGEz", CardType.DEBIT, CardColor.SILVER,"9184-2954-9023-6438",911,this.creationDate.plusDays(1), this.creationDate2.plusYears(5));
+			Card debitCard3 = new Card("Ippo Makanouchi",CardType.DEBIT,CardColor.SILVER,"1234-4567-6789-1011",333,this.creationDate.plusDays(7),
 					this.creationDate.plusDays(7).plusYears(5));
 			Account account1 = new Account("VIN001", creationDate, 5000);
 			Account account2 = new Account("VIN002", creationDate2, 7000);
@@ -66,7 +67,8 @@ public class HomebankingApplication {
 			client2.addAccount(account4);
 			client1.addCards(debitCard);
 			client1.addCards(creditCard);
-			client2.addCards(debitCard2);
+			client1.addCards(debitCard2);
+			client2.addCards(debitCard3);
 
 			client1.addClientLoans(clientLoan1);
 			client1.addClientLoans(clientLoan2);
@@ -82,6 +84,7 @@ public class HomebankingApplication {
 			cardRepository.save(debitCard);
 			cardRepository.save(creditCard);
 			cardRepository.save(debitCard2);
+			cardRepository.save(debitCard3);
 
 			account1.addTransaction(transaction1);
 			account1.addTransaction(transaction2);

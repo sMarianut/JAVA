@@ -23,13 +23,17 @@ public class CardDTO{
     public CardDTO() {
     }
     public CardDTO(Card card){
-
+        this.cardHolder = card.getCardHolder();
         this.cardType = card.getCardType();
         this.cardColor = card.getCardColor();
         this.number = card.getNumber();
         this.cvv = card.getCvv();
         this.thruDate = card.getThruDate();
         this.fromDate = card.getFromDate();
+    }
+
+    public String getCardHolder() {
+        return cardHolder;
     }
 
     public CardType getCardType() {

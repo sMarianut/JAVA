@@ -77,6 +77,386 @@ body {
     border-top-right-radius: 75px;
     border-bottom-left-radius: 75px
   }
+  /* Cards */
+  :root {
+    --glitter: url("https://assets.codepen.io/13471/silver-glitter-background.png");
+    --duration: 6.66s;
+  }
+  
+  .card-front:before {
+    content: "";
+    inset: 0;
+    position: absolute;
+    transform: translate3d(0, 0, 0.01px);
+  
+    background-image: var(--glitter), var(--glitter),
+      linear-gradient(120deg, black 25%, white, black 75%);
+    background-size: 100% 100%, 80% 80%, 200% 200%;
+    background-blend-mode: multiply, multiply, overlay;
+    background-position: 50% 50%, 50% 50%, 50% 50%;
+  
+    mix-blend-mode: color-dodge;
+    filter: brightness(2) contrast(0.8);
+  
+    animation: bg var(--duration) ease infinite;
+  }
+  .card-front3:before {
+    content: "";
+    inset: 0;
+    position: absolute;
+    transform: translate3d(0, 0, 0.01px);
+  
+    background-image: var(--glitter), var(--glitter),
+      linear-gradient(120deg, black 25%, white, black 75%);
+    background-size: 100% 100%, 80% 80%, 200% 200%;
+    background-blend-mode: multiply, multiply, overlay;
+    background-position: 50% 50%, 50% 50%, 50% 50%;
+  
+    mix-blend-mode: color-dodge;
+    filter: brightness(2) contrast(0.8);
+  
+    animation: bg var(--duration) ease infinite;
+  }
+  
+  .card-front {
+    display: grid;
+    position: relative;
+    transform: translate3d(0, 0, 0.01px);
+    width: 20rem;
+    height: 14.5rem;
+    max-width: 580px;
+    aspect-ratio: 3/2;
+  
+    border-radius: 3.5% 3.5% 3.5% 3.5% / 5% 5% 5% 5%;
+  
+    background-image: url(./images/gold-card.svg);
+    background-size: cover;
+  
+    box-shadow: 0 30px 40px -25px rgba(15, 5, 20, 1),
+      0 20px 50px -15px rgba(15, 5, 20, 1);
+    overflow: hidden;
+    animation: tilt var(--duration) ease infinite;
+    image-rendering: optimizequality;
+  }
+  .card-front2 {
+    display: grid;
+    position: relative;
+    transform: translate3d(0, 0, 0.01px);
+    width: 20rem;
+    height: 14.5rem;
+    max-width: 580px;
+    aspect-ratio: 3/2;
+  
+    border-radius: 3.5% 3.5% 3.5% 3.5% / 5% 5% 5% 5%;
+  
+    background-image: url(./images/silver-card.svg);
+    background-size: cover;
+  
+    box-shadow: 0 30px 40px -25px rgba(15, 5, 20, 1),
+      0 20px 50px -15px rgba(15, 5, 20, 1);
+    overflow: hidden;
+    animation: tilt var(--duration) ease infinite;
+    image-rendering: optimizequality;
+  }
+  .card-front3 {
+    display: grid;
+    position: relative;
+    transform: translate3d(0, 0, 0.01px);
+    width: 20rem;
+    height: 14.5rem;
+    max-width: 580px;
+    aspect-ratio: 3/2;
+  
+    border-radius: 3.5% 3.5% 3.5% 3.5% / 5% 5% 5% 5%;
+  
+    background-image: url(./images/titanium-card.svg);
+    background-size: cover;
+  
+    box-shadow: 0 30px 40px -25px rgba(15, 5, 20, 1),
+      0 20px 50px -15px rgba(15, 5, 20, 1);
+    overflow: hidden;
+    animation: tilt var(--duration) ease infinite;
+    image-rendering: optimizequality;
+  }
+  
+  .card-front:after {
+    content: "";
+    background: none, none,
+      linear-gradient(
+        125deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.4) 0.1%,
+        rgba(255, 255, 255, 0) 60%
+      );
+    background-size: 200% 200%;
+    mix-blend-mode: hard-light;
+    animation: bg var(--duration) ease infinite;
+  }
+  .card-front3:after {
+    content: "";
+    background: none, none,
+      linear-gradient(
+        125deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.4) 0.1%,
+        rgba(255, 255, 255, 0) 60%
+      );
+    background-size: 200% 200%;
+    mix-blend-mode: hard-light;
+    animation: bg var(--duration) ease infinite;
+  }
+  
+
+  
+  .cardLogo,
+  .expiry,
+  .creation,
+  .name,
+  .number,
+  .number2,
+  .chip,
+  .icon {
+    color: #303030;
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    letter-spacing: 0.3rem;
+    text-transform: uppercase;
+    font-size: 12px;
+    inset: 5%;
+    text-shadow: -1px -1px 0px rgba(255, 255, 255, 0.5),
+      1px -1px 0px rgba(255, 255, 255, 0.5), 1px 1px 0px rgba(0, 0, 0, 0.5),
+      1px -1px 0px rgba(0, 0, 0, 0.5);
+    z-index: 5;
+  }
+  .cardbg{
+    background-image: url(./images/card-bg.svg);
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .violet{
+    background-image: url(./images/buttonbg.svg);
+    background-size: cover;
+    
+   
+  }
+  .accordion-button:not(.collapsed) {
+    color:#e3e8ee!important ;
+  }
+  
+  .name,
+  .number,
+  .number2
+  .expiry{
+    background-image: linear-gradient(to bottom, #646464 20%, #494949 70%), none,
+      linear-gradient(
+        120deg,
+        transparent 10%,
+        rgb(43, 43, 43) 40%,
+        rgb(37, 37, 37) 60%,
+        transparent 90%
+      );
+    background-size: cover, cover, 200%;
+    background-position: 50% 50%;
+    background-blend-mode: overlay;
+    -webkit-text-fill-color: rgb(37, 22, 39);
+    -webkit-background-clip: text;
+    animation: bg var(--duration) ease infinite;
+  }
+
+  
+  .number {
+    font-family: PT Mono, monospace;
+    text-align: center;
+    font-size: 20px;
+    letter-spacing: 0.025em;
+    top: 60%;
+    bottom: auto;
+  }
+  .number2 {
+    font-family: PT Mono, monospace;
+    text-align: center;
+    font-size: 20px;
+    letter-spacing: 0.025em;
+    top: 30%;
+    left: 30%;
+  }
+  .expiry,
+  .name {
+    top: auto;
+  }
+  
+  .creation{
+    top: 10px;
+  }
+  
+  .name {
+    right: auto;
+    max-width: 180px;
+    line-height: 1.2;
+    text-align: left;
+  }
+  
+  .expiry{
+    left: auto;
+  }
+  .creation{
+    left: auto;
+  }
+  
+  .cardLogo {
+    bottom: auto;
+    left: auto;
+    width: 15%;
+    filter: invert(1) saturate(0) brightness(1) contrast(1.2);
+    mix-blend-mode: screen;
+  }
+  
+  .chip {
+    display: grid;
+    place-items: center;
+    width: 14%;
+    aspect-ratio: 5/4;
+    left: 10%;
+    top: 30%;
+    border-radius: 10% 10% 10% 10% / 15% 15% 15% 15%;
+  
+    background-image: none, none,
+      linear-gradient(120deg, #777 10%, #ddd 40%, #ddd 60%, #777 90%);
+    background-size: 200% 200%;
+    background-position: 50% 50%;
+  
+    overflow: hidden;
+    animation: bg var(--duration) ease infinite;
+  }
+  
+  .chip svg {
+    display: block;
+    width: 90%;
+    fill: none;
+    stroke: #444;
+    stroke-width: 2;
+  }
+  
+  .contactless {
+    position: absolute;
+    left: 23%;
+    top: 30%;
+    width: 12%;
+    rotate: 90deg;
+  
+    stroke-width: 1.25;
+    stroke: currentColor;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.5;
+  }
+  
+  .icon {
+    width: 25%;
+    bottom: auto;
+    right: auto;
+    top: 0;
+    left: 15px;
+    filter: invert(1) hue-rotate(180deg) saturate(5) contrast(2);
+  }
+  
+  @keyframes tilt {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0.01px) rotateY(-20deg) rotateX(5deg);
+    }
+    50% {
+      transform: translate3d(0, 0, 0.01px) rotateY(20deg) rotateX(5deg);
+    }
+  }
+  
+  @keyframes bg {
+    0%,
+    100% {
+      background-position: 50% 50%, calc(50% + 1px) calc(50% + 1px), 0% 50%;
+    }
+    50% {
+      background-position: 50% 50%, calc(50% - 1px) calc(50% - 1px), 100% 50%;
+    }
+  }
+  
+ #chip,
+  #contactless {
+    display: none;
+  }
+/* gradient of cards */
+@keyframes shine {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(30deg);
+  }
+  80% {
+    transform: translateX(-100%) translateY(-100%) rotate(30deg);
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(30deg);
+  }
+}
+
+.box--gradient {
+  display: flex;
+  height: 300px;
+  margin: 0 10px;
+  position: relative;
+  width: 300px;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.box--gradient p {
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  text-align: center;
+  flex-grow: 1;
+  margin: 0;
+  font-size: 30px;
+}
+
+.box--gradient:after {
+  content: '';
+  top: 0;
+  transform: translateX(100%) rotate(30deg);
+  width: 300%;
+  height: 300%;
+  position: absolute;
+  z-index: 1;
+  animation: shine 3s infinite ease-in;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(128, 186, 232, 0) 99%,
+    rgba(128, 186, 232, 0) 100%
+  );
+}
+
+.box--gradient.silver {
+  background: linear-gradient(to bottom, #bcc6cc, #eee, #bcc6cc);
+}
+
+.box--gradient.gold {
+  background: linear-gradient(to bottom, #c39738, #deb761, #c39738);
+}
+
+.box--gradient.gold:after {
+  animation-delay: 1s;
+}
+
+.box--gradient.platinum {
+  background: linear-gradient(to bottom, #d5d7e5, #eee, #d5d7e5);
+}
+
+.box--gradient.platinum:after {
+  animation-delay: 2s;
+}
+ 
   
  
   @media only screen and (min-width:320px ) and (max-width:740px){
@@ -817,7 +1197,8 @@ color: #d3cadf;
 h5.effect-shine:hover {
   -webkit-mask-image: linear-gradient(-75deg, rgba(0,0,0,.6) 30%, #000 50%, rgba(0,0,0,.6) 70%);
   -webkit-mask-size: 200%;
-  animation: shine 2s infinite;
+  color: #512B81;
+  animation: shine 20s infinite;
 }
 /* transact hover */
 .transact {
@@ -845,8 +1226,6 @@ h5.effect-shine:hover {
   transform-origin: left;
   transform: scaleX(1);
 }
-
-
 @-webkit-keyframes shine {
   from {
     -webkit-mask-position: 150%;
