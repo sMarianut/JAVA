@@ -2,10 +2,12 @@ package com.mindhub.homebanking;
 
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,6 +21,8 @@ public class HomebankingApplication {
 	private LocalDate creationDate2 = LocalDate.now().plusDays(1);
 	private LocalDateTime date = LocalDateTime.now();
 	private LocalDateTime date2 = LocalDateTime.now().plusHours(2);
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	public static void main(String[] args) {
 		SpringApplication.run(HomebankingApplication.class, args);
@@ -26,8 +30,8 @@ public class HomebankingApplication {
 	@Bean
 	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRespository clientLoanRepository, CardRepository cardRepository) {
 		return (args) -> {
-			Client client1 = new Client("Melba", "Morel", "melbax@gmail.com");
-			Client client2 = new Client("Ippo", "Makanouchi",  "Ippo@Hajime.com");
+			Client client1 = new Client("Melba", "Morel", "melbax@gmail.com", passwordEncoder.encode("1234"));
+			Client client2 = new Client("Ippo", "Makanouchi",  "Ippo@Hajime.com",passwordEncoder.encode("4321"));
 			clientRepository.save(client1);
 			clientRepository.save(client2);
 			Card debitCard = new Card("Melba GGEz", CardType.DEBIT,CardColor.GOLD,
