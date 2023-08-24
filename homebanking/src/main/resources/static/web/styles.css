@@ -7,20 +7,64 @@
   font-family: 'Cascadia Code';
   src: url(./CascadiaCodePL.ttf);
 }
-
-[v-cloak]{
-  display: none;
- }
-
-
 body {
   font-family: 'Cascadia Code';
   background-image: url(./images/layered-waves-haikei\ \(1\).svg);
   background-color: #000;
-  background-size: cover;
-  min-height: 100%;
+  background-size: cover; 
+  min-height: 100vh;
   width: 100%;
-  /* overflow-x:hidden;  */
+  overflow-x:hidden; 
+}
+#indexH {
+	background: url("./images/bankheaven.jpg");
+	text-align: center;
+	width: 100%;
+	height: auto;
+	background-size: cover;
+	background-attachment: fixed;
+	position: relative;
+	overflow: hidden;
+	border-radius: 0 0 85% 85% / 30%;
+}
+#indexH .overlayy{
+	width: 100%;
+	height: 100%;
+	padding: 50px;
+	color: #111111;
+	text-shadow: 1px 1px 1px #dbdbdb;
+	background-image: linear-gradient(135deg, #52525269 10%, #dfdfdf6b 100%);
+}
+
+h1.h1 {
+	font-size: 80px;
+	margin-bottom: 30px;
+}
+
+.h3,
+.pindex  {
+	margin-bottom: 30px;
+  color: black;
+}
+
+button.botonn {
+	border: none;
+	outline: none;
+	padding: 10px 20px;
+	border-radius: 50px;
+	color: #ebebeb;
+	background: #5e2b9c;
+	margin-bottom: 50px;
+	box-shadow: 0 3px 20px 0 #0000003b;
+}
+button.botonn:hover {
+	cursor: pointer;
+  color: #32bb5f;
+  transition: .5s;
+}
+.greenS{
+  width: 30vw;
+  height: 50vh;
 }
 
 /* futer */
@@ -926,32 +970,6 @@ color: #868686;
 }
 
 
-/* @media #{$gl-xs}              {
-  
-  table					              { display:block;
-	  > *,tr,td,th              { display:block }
-    
-    thead                     { display:none }
-    tbody tr                  { height:auto; padding:8px 0;
-      td                      { padding-left:45%; margin-bottom:12px;
-        &:last-child          { margin-bottom:0 }
-        &:before              { 
-          position:absolute;
-          font-weight:700;
-          width:40%;
-          left:10px;
-          top:0
-        }
-        
-        &:nth-child(1):before { content:"Code";}
-        &:nth-child(2):before { content:"Stock";}
-        &:nth-child(3):before { content:"Cap";}
-        &:nth-child(4):before { content:"Inch";}
-        &:nth-child(5):before { content:"Box Type";}
-      }        
-    }
-  }
-}  	 */
 /* name title */
 .bi-1-circle, .bi-2-circle, .bi-3-circle{
   color: white
@@ -1235,4 +1253,141 @@ h5.effect-shine:hover {
     -webkit-mask-position: -50%;
   }
 }
+
+/* index form */
+:root {
+  --ruler: 16px;
+  --color-red: #ae1100;
+  --color-bg: #ebecf0;
+  --color-shadow: #babecc;
+  --color-white: #fff;
+}
+
+.formI{
+  background-image: url(./images/bgLoanD.svg);
+}
+
+body,
+p,
+input,
+select,
+textarea,
+button {
+  letter-spacing: -0.2px;
+  font-size: var(--ruler);
+}
+
+div,
+p {
+  color: var(--color-shadow);
+  text-shadow: 1px 1px 1px var(--color-white);
+}
+
+form {
+  padding: var(--ruler);
+  width: calc(var(--ruler) * 20);
+  margin: 0 auto;
+}
+
+.segment {
+  padding: calc(var(--ruler) * 2) 0;
+  text-align: center;
+}
+
+button,
+input {
+  border: 0;
+  outline: 0;
+  font-size: var(--ruler);
+  border-radius: calc(var(--ruler) * 20);
+  padding: var(--ruler);
+  background-color: var(--color-bg);
+  text-shadow: 1px 1px 0 var(--color-white);
+}
+
+label {
+  display: block;
+  margin-bottom: calc(var(--ruler) * 1.5);
+  width: 100%;
+}
+
+input {
+  margin-right: calc(var(--ruler) / 2);
+  box-shadow: inset 2px 2px 5px var(--color-shadow),
+    inset -5px -5px 10px var(--color-white);
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.2s ease-in-out;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+input:focus {
+  box-shadow: inset 1px 1px 2px var(--color-shadow),
+    inset -1px -1px 2px var(--color-white);
+}
+
+button {
+  color: #61677c;
+  font-weight: bold;
+  box-shadow: -5px -5px 20px var(--color-white),
+    5px 5px 20px var(--color-shadow);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+button:hover {
+  box-shadow: -2px -2px 5px var(--color-white),
+    2px 2px 5px var(--color-shadow);
+}
+
+button:active {
+  box-shadow: inset 1px 1px 2px var(--color-shadow),
+    inset -1px -1px 2px var(--color-white);
+}
+
+.button .icon {
+  margin-right: calc(var(--ruler) / 2);
+}
+
+.button.unit {
+  border-radius: calc(var(--ruler) / 2);
+  line-height: 0;
+  width: calc(var(--ruler) * 3);
+  height: calc(var(--ruler) * 3);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 calc(var(--ruler) / 2);
+  font-size: calc(var(--ruler) * 1.2);
+}
+
+.button.unit .icon {
+  margin-right: 0;
+}
+
+.button.red {
+  display: block;
+  width: 100%;
+  color: var(--color-red);
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.input-group label {
+  margin: 0;
+  flex: 1;
+}
+
+
+
+
+
+
+
 

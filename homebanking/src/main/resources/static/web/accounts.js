@@ -12,12 +12,12 @@ createApp({
         }
     },
     created() {
-        this.loadData(),
-            this.kartaImgClass()
+        this.loadData()
+
     },
     methods: {
         loadData() {
-            axios.get('http://localhost:8080/api/clients/1')
+            axios.get('http://localhost:8080/api/clients/current')
                 .then(res => {
                     this.clients = res
                     this.firstName = this.clients.data.firstName
@@ -29,9 +29,13 @@ createApp({
                 })
                 .catch(error => console.error(error))
         },
-        kartaImgClass() {
-            const classCard = this.loans.name == 'Personal' ? 'karta__img--hover' : 'karta__img2--hover';
-            return classCard;
+        logout() {
+            axios.post('http://localhost:8080/api/logout')
+                .then(response => {
+                    location.href = '/index.html';
+                })
         }
+
+
     }
 }).mount('#app')

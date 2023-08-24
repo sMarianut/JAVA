@@ -32,8 +32,10 @@ public class HomebankingApplication {
 		return (args) -> {
 			Client client1 = new Client("Melba", "Morel", "melbax@gmail.com", passwordEncoder.encode("1234"));
 			Client client2 = new Client("Ippo", "Makanouchi",  "Ippo@Hajime.com",passwordEncoder.encode("4321"));
+			Client admin = new Client("admin", "admin", "admin@adm.com", passwordEncoder.encode("soyadminjeje"));
 			clientRepository.save(client1);
 			clientRepository.save(client2);
+			clientRepository.save(admin);
 			Card debitCard = new Card("Melba GGEz", CardType.DEBIT,CardColor.GOLD,
 					"4342-4234-5667-3456",666,this.creationDate.plusDays(3),
 					this.creationDate.plusDays(3).plusYears(5));
