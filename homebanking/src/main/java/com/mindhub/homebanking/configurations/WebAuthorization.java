@@ -50,8 +50,7 @@ public class WebAuthorization {
         http.logout().logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());
         http.csrf().disable();
         http.headers().frameOptions().disable();
-        http.exceptionHandling()
-                .authenticationEntryPoint((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
+        http.exceptionHandling().authenticationEntryPoint((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
         http.formLogin().failureHandler((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
         http.logout().logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());
 

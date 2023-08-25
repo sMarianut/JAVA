@@ -22,12 +22,14 @@ public class Account {
     private LocalDate creationDate;
     private double balance;
 
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
     private Client client;
     @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
     private Set<Transaction> transactions = new HashSet<>();
     //CONSTRUCTOR PREDETERMINADO
+
     public Account() {
     }
 
