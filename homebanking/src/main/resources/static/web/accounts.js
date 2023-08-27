@@ -17,13 +17,11 @@ createApp({
     },
     methods: {
         loadData() {
-            axios.get('http://localhost:8080/api/clients/current')
+            axios.get('http://localhost:8080/api/clients/current/accounts')
                 .then(res => {
-                    this.clients = res
-                    this.firstName = this.clients.data.firstName
-                    this.accounts = this.clients.data.accounts
-                    this.loans = this.clients.data.loans.sort((a, b) => a.loanId - b.loanId)
-                    console.log(this.loans);
+                    console.log(res);
+                    this.accounts = res.data
+                    this.loans = this.accounts
                     localStorage.setItem('client', JSON.stringify(this.clients))
 
                 })

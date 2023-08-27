@@ -1,5 +1,6 @@
 package com.mindhub.homebanking;
 
+import com.mindhub.homebanking.controllers.CardsController;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,6 +97,7 @@ public class HomebankingApplication {
 			account1.addTransaction(transaction2);
 			transactionRepository.save(transaction1);
 			transactionRepository.save(transaction2);
+
         };
 	}
 }

@@ -35,6 +35,7 @@ public class ClientController {
         }while(accountRepository.findByNumber(random) != null);
         return random;
     }
+
     @RequestMapping(path = "/api/clients", method = RequestMethod.POST)
 
     public ResponseEntity<Object> register(
@@ -50,8 +51,8 @@ public class ClientController {
         String number = Rnumber();
         Account newAccount = new Account(number, this.creationDate ,0);
         Client newClient = new Client(firstName,lastName,email,passwordEncoder.encode(password));
-        newClient.addAccount(newAccount);
         clientRepository.save(newClient);
+        newClient.addAccount(newAccount);
         accountRepository.save(newAccount);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
