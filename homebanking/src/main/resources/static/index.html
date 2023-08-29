@@ -21,10 +21,10 @@
                 <h3 class="h3">Reasons for Choosing US</h3>
                 <p class="pindex">Here, your money is safe.</p>
                 <br>
-                <button class="botonn">New? Register now!</button>
+                <button class="botonn" @click.prevent="showRegister">New? Register now!</button>
             </div>
         </header>
-        <h4 class="text-light text-center">Log in or register to your account</h4>
+        <h4 class="text-black text-center">Log in or register to your account</h4>
         <section id="indexL" v-if="showLoginForm">
             <form class="formI rounded p-3 m-5" @submit.prevent="login">
                 <div class="segment">

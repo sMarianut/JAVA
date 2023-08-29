@@ -47,7 +47,7 @@ h1.h1 {
   color: black;
 }
 
-button.botonn {
+.botonn {
 	border: none;
 	outline: none;
 	padding: 10px 20px;
@@ -57,7 +57,7 @@ button.botonn {
 	margin-bottom: 50px;
 	box-shadow: 0 3px 20px 0 #0000003b;
 }
-button.botonn:hover {
+.botonn:hover {
 	cursor: pointer;
   color: #32bb5f;
   transition: .5s;
@@ -1308,7 +1308,7 @@ input {
 label {
   display: block;
   margin-bottom: calc(var(--ruler) * 1.5);
-  width: 100%;
+  
 }
 
 input {
@@ -1327,7 +1327,7 @@ input:focus {
     inset -1px -1px 2px var(--color-white);
 }
 
-button {
+/* button {
   color: #61677c;
   font-weight: bold;
   box-shadow: -5px -5px 20px var(--color-white),
@@ -1335,13 +1335,23 @@ button {
   transition: all 0.2s ease-in-out;
   cursor: pointer;
   font-weight: 600;
+} */
+button{
+  transition: transform 0.5s ease-in-out;
 }
-
 button:hover {
   box-shadow: -2px -2px 5px var(--color-white),
     2px 2px 5px var(--color-shadow);
+    animation: latido 1.5s infinite;
 }
-
+@keyframes latido {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
 button:active {
   box-shadow: inset 1px 1px 2px var(--color-shadow),
     inset -1px -1px 2px var(--color-white);
@@ -1478,6 +1488,13 @@ button:active {
       }
     }
   }
+}
+.scalee-enter-active, .scalee-leave-active {
+  transition: transform 1s;
+}
+
+.scalee-enter, .scalee-leave-to {
+  transform: scale(0);
 }
 
 

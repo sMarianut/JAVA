@@ -29,7 +29,7 @@ public class CardsController {
     @Autowired
     private AccountRepository accountRepository;
     @Autowired
-    ClientRepository clientRepository;
+    private ClientRepository clientRepository;
     public String CardNumber() {
         String generatedNumber;
         do {

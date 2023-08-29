@@ -94,8 +94,14 @@
                     <span class="visually-hidden">Next</span>
                 </button>
             </article>
+            <div class="col-12 d-flex justify-content-end">
+                <button @click="logout" class=" bg-danger text-light">Log out</button>
+            </div>
             <h1>Accounts</h1>
-            <button @click="logout">log out?</button>
+            <section>
+
+            </section>
+
             <h2 class="text-black">Welcome! {{firstName}}</h2>
             <article class="cardsT d-flex flex-column flex-xl-row gap-5 pb-5">
                 <template class="shadow" v-for="account of accounts">
@@ -153,7 +159,7 @@
                     </a>
                 </template>
             </article>
-            <button @click.prevent="createAcc">CREA UNA CUENTA ACA</button>
+            <button @click.prevent="createAcc">CREATE AN ACCOUNT</button>
 
             <!-- <section class="bg-black container w-75 boxLoans">
                 <h2 class="pt-3">Your Loans:</h2>

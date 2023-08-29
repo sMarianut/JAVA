@@ -17,6 +17,7 @@
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.27/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="/web/styles.css">
+    <link rel="shortcut icon" href="./images/banklogo.png" type="image/x-icon">
 </head>
 
 <body>
@@ -99,22 +100,22 @@
                 <h1>There are your cards. <span class="fs-2 text-info">{{client.firstName}}</span> </h1>
                 <h4 class="text-dark">Do you want to create a brand new Card?</h4>
                 <button @click.prevent="toggleForm">Create a new card</button>
-                <article v-if="showForm">
-                    <select class="form-select" aria-label="Default select example" v-model="cardColor">
-                        <label for="">crear</label>
-                        <option selected>Seleccione un color de tarjeta</option>
+                <article v-if="showForm" class="p-3 d-flex justify-content-center">
+                    <select class="form-select p-3 m-3" aria-label="Default select example" v-model="cardColor">
+                        <option disabled selected value="">Seleccione un color de tarjeta</option>
                         <option value="SILVER">Silver</option>
                         <option value="GOLD">Gold</option>
-                        <option value="TITANIUM">TITANIUM</option>
+                        <option value="TITANIUM">Titanium</option>
                     </select>
-                    <select class="form-select" aria-label="Default select example" v-model="cardType">
-                        <option selected>Seleccione un tipo de tarjeta</option>
+                    <select class="form-select p-3 m-3" aria-label="Default select example" v-model="cardType">
+                        <option disabled selected value="">Seleccione un tipo de tarjeta</option>
                         <option value="DEBIT">Debit</option>
                         <option value="CREDIT">Credit</option>
                     </select>
                     <button @click.prevent="createCard">Create Card!</button>
                 </article>
             </section>
+
 
 
             <section class=" d-flex gap-3 container mb-5 flex-wrap col-12">

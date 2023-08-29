@@ -32,19 +32,20 @@ createApp({
                 )
         },
         toggleForm() {
-            this.showForm = true
+            this.showForm = !this.showForm
         },
         createCard() {
             Swal.fire({
-                title: 'Quieres crear una cuenta?',
+                title: 'Do you want to create a new card?',
                 inputAttributes: { autocapitalize: 'off', },
-                showCancelButton: true, confirmButtonText: 'Si!',
+                showCancelButton: true, confirmButtonText: 'Yes!',
                 showLoaderOnConfirm: true, preConfirm: login => {
                     return axios.post('/api/clients/current/cards', `cardType=${this.cardType}&cardColor=${this.cardColor}`, { headers: { 'content-type': 'application/x-www-form-urlencoded' } })
                         .then(response => { window.location.href = './cards.html' })
                         .catch(error => {
                             Swal.fire({
                                 icon: 'error',
+                                title: "ERROR",
                                 text: error.response.data,
                                 confirmButtonColor: '#5b31be93',
                             });

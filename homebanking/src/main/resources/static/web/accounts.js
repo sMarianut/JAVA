@@ -35,9 +35,9 @@ createApp({
         },
         createAcc() {
             Swal.fire({
-                title: 'Quieres crear una cuenta?',
+                title: 'Do you want to create an account?',
                 inputAttributes: { autocapitalize: 'off', },
-                showCancelButton: true, confirmButtonText: 'Si!',
+                showCancelButton: true, confirmButtonText: 'Yes!',
                 showLoaderOnConfirm: true, preConfirm: login => {
                     return axios
                         .post('/api/clients/current/accounts')

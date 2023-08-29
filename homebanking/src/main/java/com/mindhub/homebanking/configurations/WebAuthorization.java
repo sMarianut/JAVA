@@ -22,7 +22,7 @@ public class WebAuthorization {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/index.html","/web/hola.htm").permitAll()
+                .antMatchers("/index.html").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/login").permitAll()
                 .antMatchers("/web/styles.css").permitAll()
                 .antMatchers("/web/images/**").permitAll()
@@ -31,9 +31,10 @@ public class WebAuthorization {
                 .antMatchers(HttpMethod.POST,"/api/clients").permitAll()
                 .antMatchers("/admin/**").hasAnyAuthority("ADMIN")
                 .antMatchers("/rest/**", "/admin/**", "/h2-console/**", "/api/clients").hasAnyAuthority("ADMIN")
-                .antMatchers("/web/accounts.html","/web/cards.html","/web/account.html","/web/accounts.js","/web/account.js","/web/cards.js").hasAnyAuthority("USER")
-                .antMatchers("/api/clients/current","/api/clients/current/cards","/api/clients/current/accounts").hasAnyAuthority("USER")
+                .antMatchers("/web/accounts.html","/web/cards.html","/web/account.html","/web/accounts.js","/web/account.js","/web/cards.js","/web/error.html").hasAnyAuthority("USER")
+                .antMatchers("/api/clients/current","/api/clients/current/cards","/api/clients/current/accounts","/api/clients/current/account.html","/api/clients/current/accounts/{id}").hasAnyAuthority("USER")
                 .anyRequest().denyAll();
+
 
 
         http.formLogin()

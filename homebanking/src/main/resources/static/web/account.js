@@ -20,18 +20,21 @@ createApp({
             const par = location.search
             const searchP = new URLSearchParams(par)
             this.idAccount = searchP.get('id')
-            axios.get('http://localhost:8080/api/accounts/' + this.idAccount)
+            axios.get('/api/clients/current/accounts/' + this.idAccount)
                 .then(res => {
-                    this.accounts = res.data
-                    console.log(this.accounts);
-                    for (const transacs of this.accounts.transactions) {
-                        this.transactions.push(transacs)
-                    }
+                    console.log(res);
+                    this.transactions = res.data.transactions
+                    console.log(this.transactions);
                     this.date = this.transactions.map(tr => tr.date.slice(0, -16).replace(/-/g, '/'))
                     this.hour = this.transactions.map(tr => tr.date.slice(11, -7))
                     this.dateForm.hour = this.hour
                     this.dateForm.date = this.date
                     this.transactions.sort((a, b) => b.id - a.id)
+                })
+                .catch(error => {
+                    console.error(error)
+                    window.location.href = "/web/error.html"
+
                 })
         },
 

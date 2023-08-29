@@ -98,15 +98,18 @@
                 <h1>Account resume {{accounts.number}}</h1>
                 <h3 class="pt-3 text-light transact">Your transactions</h3>
             </section>
-
+            <article class="d-flex justify-content-center align-items-center">
+                <h6 class="text-white col-2">get your transactions in-real time for the best managment</h6>
+                <img class="col-6 rounded" src="./images/transaction.jpg" alt="">
+            </article>
             <article class="pt-5 pb-5 mb-5 table-responsive">
                 <table class="w-50">
                     <thead>
                         <tr>
-                            <th>Type</th>
-                            <th>Description</th>
-                            <th>Date</th>
-                            <th>Amount</th>
+                            <th class="text-dark">Type</th>
+                            <th class="text-dark">Description</th>
+                            <th class="text-dark">Date</th>
+                            <th class="text-dark">Amount</th>
                         </tr>
                         <thead>
                         <tbody>
@@ -115,11 +118,11 @@
                                     <td
                                         :class="{'text-danger': transaction.type === 'DEBIT', 'text-success': transaction.type !== 'DEBIT'}">
                                         {{transaction.type}}</td>
-                                    <td>{{transaction.description}}</td>
-                                    <td>
+                                    <td class="text-dark">{{transaction.description}}</td>
+                                    <td class="text-dark">
                                         {{dateForm.hour[index]}} {{dateForm.date[index]}}
                                     </td>
-                                    <td>$ {{transaction.amount}}</td>
+                                    <td class="text-dark">$ {{transaction.amount}}</td>
                                 </tr>
                             </template>
                         </tbody>

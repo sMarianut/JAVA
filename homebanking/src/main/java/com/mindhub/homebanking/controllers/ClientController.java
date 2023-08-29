@@ -19,7 +19,7 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 @RestController
-public class ClientController {
+public class ClientController{
     private LocalDate creationDate = LocalDate.now();
     @Autowired
     private ClientRepository clientRepository;
@@ -41,14 +41,15 @@ public class ClientController {
     public ResponseEntity<Object> register(
             @RequestParam String firstName, @RequestParam String lastName,
             @RequestParam String email, @RequestParam String password) {
-        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty()) {
-            return new ResponseEntity<>("Complete todos los campos", HttpStatus.FORBIDDEN);
+        if (firstName.isBlank() || lastName.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            return new ResponseEntity<>("Fill all the fields", HttpStatus.FORBIDDEN);
         }
+
         if (clientRepository.findByEmail(email) !=  null) {
 
-            return new ResponseEntity<>("Este email ya esta en uso", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("This email is already in use, BRODER", HttpStatus.FORBIDDEN);
         }
-        String number = Rnumber();
+        String number = Rnumber(); ///variable
         Account newAccount = new Account(number, this.creationDate ,0);
         Client newClient = new Client(firstName,lastName,email,passwordEncoder.encode(password));
         clientRepository.save(newClient);

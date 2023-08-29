@@ -16,8 +16,6 @@ createApp({
         login() {
             axios.post('/api/login', `email=${this.email}&password=${this.password}`, { headers: { 'content-type': 'application/x-www-form-urlencoded' } })
                 .then(response => {
-                    console.log('entra a la response');
-                    console.log(this.email);
                     if ("admin@adm.com".includes(this.email)) {
                         location.href = '/admin/manager.html';
                     } else {
@@ -43,12 +41,7 @@ createApp({
         showRegister() {
             this.showLoginForm = false;
         }
-        // showPassword() {
-        //     this.isPasswordShowing = !(this.isPasswordShowing);
-        // }
+
     }
 }).mount('#app')
-
-
-// }:type="isPasswordShowing ? 'text' : 'password'"
 

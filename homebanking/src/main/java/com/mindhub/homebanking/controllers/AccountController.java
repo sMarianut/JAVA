@@ -3,6 +3,7 @@ package com.mindhub.homebanking.controllers;
 import com.mindhub.homebanking.dtos.AccountDTO;
 import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.models.Account;
+import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 
 @RestController
+@RequestMapping("/api")
 public class AccountController {
     @Autowired
     private ClientRepository clientRepository;
@@ -32,15 +34,20 @@ public class AccountController {
             return random;
     }
 
-    @RequestMapping("/api/clients/current/accounts")
+    @RequestMapping("clients/current/accounts")
     public List<AccountDTO> getAccounts(Authentication authentication){
         return new ClientDTO(clientRepository.findByEmail(authentication.getName())).getAccounts().stream().collect(toList());
     }
-    @RequestMapping("/api/clients/current/accounts/{id}")
-    public AccountDTO getAccount(@PathVariable Long id){
-        return accountRepository.findById(id).map(AccountDTO::new).orElse(null);
+    @RequestMapping("clients/current/accounts/{id}")
+    public ResponseEntity<Object> getAccount(@PathVariable Long id, Authentication authentication){
+       Client currentC =  clientRepository.findByEmail(authentication.getName());
+       Account currentA = accountRepository.findById(id).orElse(null);
+       if (currentC.getId() == currentA.getClient().getId()) {
+           return new ResponseEntity<>(new AccountDTO(currentA), HttpStatus.OK);
+       }
+       return new ResponseEntity<>("Your not allowed to see this", HttpStatus.FORBIDDEN);
     }
-    @PostMapping(path = "/api/clients/current/accounts")
+    @PostMapping(path = "clients/current/accounts")
     public ResponseEntity<Object> createAcc(Authentication authentication) {
         if (clientRepository.findByEmail(authentication.getName()).getAccounts().size() <= 2) {
             String numberAcc = Rnumber();
@@ -48,7 +55,7 @@ public class AccountController {
             clientRepository.findByEmail(authentication.getName()).addAccount(newAcc);
             accountRepository.save(newAcc);
         }else {
-            return new ResponseEntity<>("NO FUNCA BRO", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("You can't have more than 2 accounts", HttpStatus.FORBIDDEN);
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
     }}
