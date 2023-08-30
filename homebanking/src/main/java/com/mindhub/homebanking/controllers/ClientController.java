@@ -19,6 +19,7 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 @RestController
+@RequestMapping("/api")
 public class ClientController{
     private LocalDate creationDate = LocalDate.now();
     @Autowired
@@ -36,7 +37,7 @@ public class ClientController{
         return random;
     }
 
-    @RequestMapping(path = "/api/clients", method = RequestMethod.POST)
+    @RequestMapping(path = "/clients", method = RequestMethod.POST)
 
     public ResponseEntity<Object> register(
             @RequestParam String firstName, @RequestParam String lastName,
@@ -58,7 +59,7 @@ public class ClientController{
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @RequestMapping("/api/clients")
+    @RequestMapping("/clients")
     public List<ClientDTO> getClients(){
         return clientRepository.findAll()
                 .stream()
@@ -66,13 +67,13 @@ public class ClientController{
                 .collect(toList());
     }
 
-    @RequestMapping("/api/clients/{id}")
+    @RequestMapping("/clients/{id}")
     public ClientDTO getClient(@PathVariable Long id){
         return clientRepository.findById(id)
                 .map(client -> new ClientDTO(client))
                 .orElse(null);
     }
-    @RequestMapping("/api/clients/current")
+    @RequestMapping("/clients/current")
     public ClientDTO getClient(Authentication authentication){
      return new ClientDTO(clientRepository.findByEmail(authentication.getName()));
     }

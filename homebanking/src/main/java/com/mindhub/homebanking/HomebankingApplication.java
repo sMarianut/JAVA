@@ -33,7 +33,7 @@ public class HomebankingApplication {
 		return (args) -> {
 			Client client1 = new Client("Melba", "Morel", "melbax@gmail.com", passwordEncoder.encode("1234"));
 			Client client2 = new Client("Ippo", "Makanouchi",  "Ippo@Hajime.com",passwordEncoder.encode("4321"));
-			Client admin = new Client("admin", "admin", "admin@adm.com", passwordEncoder.encode("soyadminjeje"));
+			Client admin = new Client("admin", "admin", "admin@admSpecific445MB", passwordEncoder.encode("soyadminjeje"));
 			clientRepository.save(client1);
 			clientRepository.save(client2);
 			clientRepository.save(admin);

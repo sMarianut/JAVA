@@ -24,7 +24,7 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
         auth.userDetailsService(inputName-> {
             Client client = clientRepository.findByEmail(inputName);
             if (client != null) {
-                if (client.getEmail().equals("admin@adm.com")){
+                if (client.getEmail().contains("@admSpecific445MB.com")){
                     return new User(client.getEmail(), client.getPassword(),
                             AuthorityUtils.createAuthorityList("ADMIN"));
                 }else {
