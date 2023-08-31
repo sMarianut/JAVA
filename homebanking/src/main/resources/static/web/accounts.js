@@ -21,6 +21,7 @@ createApp({
                 .then(res => {
                     console.log(res);
                     this.accounts = res.data
+                    console.log(this.accounts);
                     this.loans = this.accounts
                     localStorage.setItem('client', JSON.stringify(this.clients))
 

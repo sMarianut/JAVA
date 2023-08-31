@@ -1338,6 +1338,7 @@ input:focus {
 } */
 button{
   transition: transform 0.5s ease-in-out;
+  
 }
 button:hover {
   box-shadow: -2px -2px 5px var(--color-white),

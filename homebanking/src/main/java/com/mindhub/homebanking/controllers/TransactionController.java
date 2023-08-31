@@ -31,38 +31,44 @@ public class TransactionController {
     private ClientRepository clientRepository;
     @Transactional
     @PostMapping("/transactions")
-    public ResponseEntity<Object> createTransaction(@RequestParam double amount,
+    public ResponseEntity<Object> createTransaction(@RequestParam String amount,
                                                     @RequestParam String description,
                                                     @RequestParam String originAccountNumber,
                                                     @RequestParam String destinationAccountNumber, Authentication authentication){
         Client currentC = clientRepository.findByEmail(authentication.getName());
-        Account originA = currentC.getAccounts().stream().filter(account -> account.getNumber().equals(originAccountNumber)).findFirst().orElse(null);
+        Account accOrigin = accountRepository.findByNumber(originAccountNumber);
         Account destinationA = accountRepository.findByNumber(destinationAccountNumber);
-        if(amount <= 0){
-            return new ResponseEntity<>("Amount must be greater than 0", HttpStatus.FORBIDDEN);
+        if (destinationAccountNumber.isBlank()){
+            return new ResponseEntity<>("Destination account number cannot be empty", HttpStatus.FORBIDDEN);
+        }
+        if (originAccountNumber.isBlank()){
+            return new ResponseEntity<>("Origin account number cannot be empty", HttpStatus.FORBIDDEN);
+        }
+        if (accOrigin == null){
+           return new ResponseEntity<>("Origin account not found", HttpStatus.FORBIDDEN);
+       }
+       if(destinationA == null){
+          return new ResponseEntity<>("Destination account not found", HttpStatus.FORBIDDEN);
+        }
+        if(amount.isBlank() || Double.parseDouble(amount) <= 0){
+            return new ResponseEntity<>("Please enter a valid amount", HttpStatus.FORBIDDEN);
         }
         if (description.isBlank()){
             return new ResponseEntity<>("Description cannot be empty", HttpStatus.FORBIDDEN);
         }
-        if(originA.getNumber() == destinationA.getNumber()){
+        if(accOrigin.getNumber() == destinationA.getNumber()){
             return new ResponseEntity<>("You cannot transfer to the same account", HttpStatus.FORBIDDEN);
         }
-       if ( originA == null ){
-           return new ResponseEntity<>("Origin account not found", HttpStatus.FORBIDDEN);
-       }
-       if(destinationA == null){
-           return new ResponseEntity<>("Destination account not found", HttpStatus.FORBIDDEN);
-       }
-       if( originA.getBalance() < amount ){
+       if( accOrigin.getBalance() < Double.parseDouble(amount) ){
            return new ResponseEntity<>("Insufficient funds", HttpStatus.FORBIDDEN);
        }else{
-           originA.setBalance(originA.getBalance() - amount);
-           destinationA.setBalance(destinationA.getBalance() + amount);
-           Transaction TransacDebit = new Transaction(amount,description, LocalDateTime.now(), transactionType.DEBIT);
-           Transaction TransacCredit = new Transaction(amount,description, LocalDateTime.now(), transactionType.CREDIT);
-           originA.addTransaction(TransacDebit);
+           accOrigin.setBalance(accOrigin.getBalance() - Double.parseDouble(amount));
+           destinationA.setBalance(destinationA.getBalance() + Double.parseDouble(amount));
+           Transaction TransacDebit = new Transaction(Double.parseDouble(amount),description, LocalDateTime.now(), transactionType.DEBIT);
+           Transaction TransacCredit = new Transaction(Double.parseDouble(amount),description, LocalDateTime.now(), transactionType.CREDIT);
+           accOrigin.addTransaction(TransacDebit);
            destinationA.addTransaction(TransacCredit);
-           accountRepository.save(originA);
+           accountRepository.save(accOrigin);
            accountRepository.save(destinationA);
            transactionRepository.save(TransacDebit);
            transactionRepository.save(TransacCredit);

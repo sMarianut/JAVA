@@ -31,8 +31,8 @@ public class WebAuthorization {
                 .antMatchers(HttpMethod.POST,"/api/clients","/api/transactions").permitAll()
                 .antMatchers("/admin/**").hasAnyAuthority("ADMIN")
                 .antMatchers("/rest/**", "/admin/**", "/h2-console/**", "/api/clients","/api/clients/current/accounts").hasAnyAuthority("ADMIN")
-                .antMatchers("/web/accounts.html","/web/cards.html","/web/account.html","/web/accounts.js","/web/account.js","/web/cards.js","/web/error.html").hasAnyAuthority("USER")
-                .antMatchers("/api/clients/current","/api/clients/current/cards","/api/clients/current/accounts","/api/clients/current/account.html","/api/clients/current/accounts/{id}").hasAnyAuthority("USER")
+                .antMatchers("/web/accounts.html","/web/cards.html","/web/account.html","/web/accounts.js","/web/account.js","/web/cards.js","/web/error.html","/web/transactions.html","/web/transactions.js").hasAnyAuthority("CLIENT")
+                .antMatchers("/api/clients/current","/api/clients/current/cards","/api/clients/current/accounts","/api/clients/current/account.html","/api/clients/current/accounts/{id}").hasAnyAuthority("CLIENT")
                 .anyRequest().denyAll();
 
 
@@ -54,7 +54,6 @@ public class WebAuthorization {
         http.headers().frameOptions().disable();
         http.exceptionHandling().authenticationEntryPoint((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
         http.formLogin().failureHandler((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
-        http.logout().logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());
         http.logout().logoutSuccessHandler((req, res, auth) -> {
             res.sendRedirect("/index.html");
         });
