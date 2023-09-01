@@ -28,10 +28,11 @@ public class WebAuthorization {
                 .antMatchers("/web/images/**").permitAll()
                 .antMatchers("/index.js").permitAll()
                 .antMatchers("/web/CascadiaCodePL.ttf").permitAll()
-                .antMatchers(HttpMethod.POST,"/api/clients","/api/transactions").permitAll()
+                .antMatchers(HttpMethod.POST,"/api/clients").permitAll()
                 .antMatchers("/admin/**").hasAnyAuthority("ADMIN")
                 .antMatchers("/rest/**", "/admin/**", "/h2-console/**", "/api/clients","/api/clients/current/accounts").hasAnyAuthority("ADMIN")
-                .antMatchers("/web/accounts.html","/web/cards.html","/web/account.html","/web/accounts.js","/web/account.js","/web/cards.js","/web/error.html","/web/transactions.html","/web/transactions.js").hasAnyAuthority("CLIENT")
+                .antMatchers("/web/accounts.html","/web/cards.html","/web/account.html","/web/accounts.js","/web/account.js","/web/cards.js","/web/error.html","/web/transactions.html","/web/transactions.js","/web/trasnfer.css").hasAnyAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST,"/api/transactions").hasAnyAuthority("CLIENT")
                 .antMatchers("/api/clients/current","/api/clients/current/cards","/api/clients/current/accounts","/api/clients/current/account.html","/api/clients/current/accounts/{id}").hasAnyAuthority("CLIENT")
                 .anyRequest().denyAll();
 

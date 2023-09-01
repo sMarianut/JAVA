@@ -50,14 +50,14 @@ public class TransactionController {
        if(destinationA == null){
           return new ResponseEntity<>("Destination account not found", HttpStatus.FORBIDDEN);
         }
+        if(accOrigin.getNumber() == destinationA.getNumber()){
+            return new ResponseEntity<>("You cannot transfer to the same account", HttpStatus.FORBIDDEN);
+        }
         if(amount.isBlank() || Double.parseDouble(amount) <= 0){
             return new ResponseEntity<>("Please enter a valid amount", HttpStatus.FORBIDDEN);
         }
         if (description.isBlank()){
             return new ResponseEntity<>("Description cannot be empty", HttpStatus.FORBIDDEN);
-        }
-        if(accOrigin.getNumber() == destinationA.getNumber()){
-            return new ResponseEntity<>("You cannot transfer to the same account", HttpStatus.FORBIDDEN);
         }
        if( accOrigin.getBalance() < Double.parseDouble(amount) ){
            return new ResponseEntity<>("Insufficient funds", HttpStatus.FORBIDDEN);
