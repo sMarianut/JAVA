@@ -9,6 +9,8 @@ import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.CardRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.service.CardService;
+import com.mindhub.homebanking.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,9 +29,9 @@ public class CardsController {
     @Autowired
     private CardRepository cardRepository;
     @Autowired
-    private AccountRepository accountRepository;
+    private CardService cardService;
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
     public String CardNumber() {
         String generatedNumber;
         do {
@@ -41,7 +43,7 @@ public class CardsController {
                 }
             }
             generatedNumber = number.toString();
-        } while (cardRepository.findByNumber(generatedNumber) != null);
+        } while (cardService.findByNumber(generatedNumber) != null);
 
         return generatedNumber;
     }
@@ -57,7 +59,7 @@ public class CardsController {
 
 @GetMapping("/api/clients/current/cards")
 public List<CardDTO> getCards(Authentication authentication){
-    return new ClientDTO(clientRepository.findByEmail(authentication.getName())).getCards().stream().collect(toList());
+    return new ClientDTO(clientService.findByEmail(authentication.getName())).getCards().stream().collect(toList());
 }
 
     @PostMapping("/api/clients/current/cards")
@@ -65,14 +67,14 @@ public List<CardDTO> getCards(Authentication authentication){
                                              @RequestParam CardType cardType,
                                              @RequestParam CardColor cardColor) {
         String clientA = (authentication.getName());
-        Client current = clientRepository.findByEmail(clientA);
+        Client current = clientService.findByEmail(clientA);
         List<CardType> currentTypes = current.getCards().stream().map(card -> card.getCardType()).collect(toList());
         List<CardColor> currentColors = current.getCards().stream().map(card -> card.getCardColor()).collect(toList());
 
 
 
         if (cardType == null || cardColor == null) {
-            return new ResponseEntity<>("You has to fill all the requirements.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("You has to fill all the requirements.", HttpStatus.FORBIDDEN);
 
         }
         for (Card card : current.getCards()) {
@@ -84,8 +86,8 @@ public List<CardDTO> getCards(Authentication authentication){
         int cvvR = cvv();
         Card newCard = new Card(current.getFirstName()+" "+current.getLastName(), cardType, cardColor, number,cvvR, LocalDate.now(), LocalDate.now().plusYears(5));
         current.addCards(newCard);
-        clientRepository.save(current);
-        cardRepository.save(newCard);
+        clientService.addClient(current);
+        cardService.addCard(newCard);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

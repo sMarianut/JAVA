@@ -51,9 +51,9 @@ public class HomebankingApplication {
 			Account account4 = new Account("VIN004",this.creationDate2,75000);
 			Transaction transaction1 = new Transaction(2000, "Other", date, transactionType.CREDIT );
 			Transaction transaction2 = new Transaction(-1500, "Others", date2, transactionType.DEBIT);
-			Loan loan1 = new Loan("Mortgage", 500000, Set.of(12, 24, 36,48,60));
-			Loan loan2 = new Loan("Personal", 10000, Set.of(6,12,24));
-			Loan loan3 = new Loan("Automotive", 300000, Set.of(6,12,24,36));
+			Loan loan1 = new Loan("Mortgage", 500000, Arrays.asList(12, 24, 36,48,60));
+			Loan loan2 = new Loan("Personal", 10000, Arrays.asList(6,12,24));
+			Loan loan3 = new Loan("Automotive", 300000, Arrays.asList(6,12,24,36));
 			loanRepository.save(loan1);
 			loanRepository.save(loan2);
 			loanRepository.save(loan3);
