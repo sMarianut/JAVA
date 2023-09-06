@@ -31,8 +31,9 @@ public class WebAuthorization {
                 .antMatchers(HttpMethod.POST,"/api/clients").permitAll()
                 .antMatchers("/admin/**").hasAnyAuthority("ADMIN")
                 .antMatchers("/rest/**", "/admin/**", "/h2-console/**", "/api/clients","/api/clients/current/accounts").hasAnyAuthority("ADMIN")
-                .antMatchers("/web/accounts.html","/web/cards.html","/web/account.html","/web/accounts.js","/web/account.js","/web/cards.js","/web/error.html","/web/transactions.html","/web/transactions.js","/web/trasnfer.css").hasAnyAuthority("CLIENT")
-                .antMatchers(HttpMethod.POST,"/api/transactions").hasAnyAuthority("CLIENT")
+                .antMatchers("/web/accounts.html","/web/cards.html","/web/account.html","/web/accounts.js","/web/account.js","/web/cards.js","/web/error.html","/web/transactions.html","/web/transactions.js","/web/trasnfer.css"
+                        ,"/api/loans","/web/loanapp.html","/web/loanapp.js").hasAnyAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST,"/api/transactions","/api/loans").hasAnyAuthority("CLIENT")
                 .antMatchers("/api/clients/current","/api/clients/current/cards","/api/clients/current/accounts","/api/clients/current/account.html","/api/clients/current/accounts/{id}").hasAnyAuthority("CLIENT")
                 .anyRequest().denyAll();
 

@@ -7,10 +7,11 @@ import com.mindhub.homebanking.service.AccountService;
 import com.mindhub.homebanking.service.ClientService;
 import com.mindhub.homebanking.service.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Service
 public class LoanServiceImplement implements LoanService {
     @Autowired
     private ClientService clientService;

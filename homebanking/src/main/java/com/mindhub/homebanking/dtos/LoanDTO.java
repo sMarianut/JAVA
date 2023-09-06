@@ -14,7 +14,7 @@ public class LoanDTO {
     }
 
     public LoanDTO(Loan loan) {
-        Id = loan.getId();
+        this.Id = loan.getId();
         this.name = loan.getName();
         this.maxAmount = loan.getMaxAmount();
         this.payments = loan.getPayments();

@@ -1,6 +1,7 @@
 package com.mindhub.homebanking.service;
 
 import com.mindhub.homebanking.models.Account;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
