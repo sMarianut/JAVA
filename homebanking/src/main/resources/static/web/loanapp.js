@@ -5,14 +5,10 @@ createApp({
             loans: [],
             accountDest: null,
             amount: null,
-            loanSelect: {},
             accountSelect: {},
+            loanSelect: {},
+            loanSelected: {},
             payments: {},
-            loan1: true,
-            loan2: false,
-            loan3: false
-
-
         }
     },
     created() {
@@ -35,28 +31,46 @@ createApp({
                     console.log(this.loans);
                 }).catch(error => console.log(error))
         },
-        showLoan1() {
-            this.loan1 = false
-            this.loan2 = true
-            this.loan3 = false
+        appLoan() {
+            const object = {
+                "id": this.loanSelect.id,
+                "amount": this.amount,
+                "paymentsReq": this.payments,
+                "accountDest": this.accountSelect
+            }
+            Swal.fire({
+                title: 'Do you want to apply to this loan, bro?',
+                inputAttributes: { autocapitalize: 'off', },
+                showCancelButton: true, confirmButtonText: 'Yes!',
+                showLoaderOnConfirm: true, preConfirm: login => {
+                    console.log(object);
+                    return axios.post('/api/loans', object)
+                        .then(response => { window.location.href = './loanapp.html' })
+                        .catch(error => {
+                            Swal.fire({
+                                icon: 'error',
+                                title: "Couldn't apply",
+                                text: error.response.data,
+                                confirmButtonColor: '#5b31be93',
+                            });
+                            console.log(error.response);
+                        });
+                }, allowOutsideClick: () => !Swal.isLoading(),
+            })
         },
-        showLoan2() {
-            this.loan1 = false
-            this.loan2 = false
-            this.loan3 = true
-        },
-        showLoan3() {
-            this.loan1 = true
-            this.loan2 = false
-            this.loan3 = false
-        }
-    },
-    computed: {
-        prueba() {
-            console.log(this.amount);
-            console.log(this.accountSelect);
+        logout() {
+            axios.post('/api/logout')
         }
     }
+    // computed: {
+    //     prueba() {
+    //         // console.log(this.amount);
+    //         // console.log(this.accountSelect);
+    //         console.log(this.loanSelect.id);
+    //         console.log(this.loanSelected);
+    //         console.log(this.payments);
+    //     }
+    // }
 
 }).mount('#app');
 

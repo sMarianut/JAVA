@@ -77,50 +77,34 @@
                 </article>
             </section>
             <section class="col-12 ps-3 ms-3">
-                <div class="segmented-control mb-2">
-                    <input type="radio" name="radio2" value="3" id="tab-1" checked @click="showLoan3" />
-                    <label for="tab-1" class="segmented-control__1">
-                        <p>Personal</p>
-                    </label>
-                    <input type="radio" name="radio2" value="4" id="tab-2" @click="showLoan1" />
-                    <label for="tab-2" class="segmented-control__2">
-                        <p>Automotive</p>
-                    </label>
-                    <input type="radio" name="radio2" value="5" id="tab-3" @click="showLoan2" />
-                    <label for="tab-3" class="segmented-control__3">
-                        <p>Mortgage</p>
-                    </label>
-                    <div class="segmented-control__color"></div>
-                </div>
-                <template v-if="loan1">
-                    <article class="loanForm col-8 d-flex flex-column justify-content-center align-items-center">
-                        <h3 class="text-light">Personal Loan</h3>
-                        <label class="text-light" for="">Set the amount</label>
-                        <input class="col-7 selectAcc" type="text" name="amount" id="amount" v-model="amount">
-                        {{prueba}}
-                    </article>
-                </template>
-                <template v-if="loan2">
-                    <article class="loanForm col-8 d-flex flex-column justify-content-center align-items-center">
-                        <h3 class="text-light">Automotive Loan</h3>
-                        <label class="text-light" for="">Set the amount</label>
-                        <input class="col-7 selectAcc mb-3" type="text" name="amount" id="amount" v-model="amount">
-                        {{prueba}}
-                        <label class="text-light" for="accountSelect">Select account Destiny</label>
-                        <select id="accountDest" name="accountDest" v-model="accountSelect" class="col-7 selectAcc">
-                            <template v-for="account of accountDest">
-                                <option :value="account.number">{{account.number}}</option>
+                <article class="loanForm col-8 d-flex flex-column justify-content-center align-items-center">
+                    <h3 class="text-light">Select Loan</h3>
+                    <div>
+                        <select class="selectAcc" name="loans" id="loans" v-model="loanSelect">
+                            <option disabled>Select Loan</option>
+                            <template v-for="loan of loans">
+                                <option :value="loan">{{loan.name}}</option>
                             </template>
                         </select>
-                    </article>
-                </template>
-                <template v-if="loan3">
-                    <article class="loanForm col-8 d-flex flex-column justify-content-center align-items-center">
-                        <h3 class="text-light">Mortgage Loan</h3>
-                        <label class="text-light" for="">Set the amount</label>
-                        <input class="col-7 selectAcc" type="text" name="amount" id="amount" v-model="amount">
-                    </article>
-                </template>
+                    </div>
+                    <label class="text-light" for="">Set the amount</label>
+                    <input class="col-7 selectAcc" type="number" name="amount" id="amount" v-model="amount">
+                    <label class="text-light" for="accountSelect">Select account Destiny</label>
+                    <select id="accountDest" name="accountDest" v-model="accountSelect" class="col-7 selectAcc mb-3">
+                        <option disabled>Select the account destiny</option>
+                        <template v-for="account of accountDest">
+                            <option :value="account.number">{{account.number}}</option>
+                        </template>
+                    </select>
+                    <label for="payments" class="text-light">Select the Payments</label>
+                    <select class="col-7 selectAcc mb-5" name="payments" id="payments" v-model="payments">
+                        <option disabled>Select the payments</option>
+                        <template v-for="loan of loanSelect.payments">
+                            <option :value="loan">{{loan}}</option>
+                        </template>
+                    </select>
+                    <button class="col-5 mb-5 btn btn-primary" @click.prevent="appLoan">Apply!</button>
+                </article>
             </section>
 
         </main>

@@ -13,6 +13,7 @@ createApp({
     },
     created() {
         this.loadData()
+        this.loadLoans()
 
     },
     methods: {
@@ -22,12 +23,11 @@ createApp({
                     console.log(res);
                     this.accounts = res.data
                     console.log(this.accounts);
-                    this.loans = this.accounts
                     localStorage.setItem('client', JSON.stringify(this.clients))
 
                 })
                 .catch(error => console.error(error))
-        },
+        }
         logout() {
             axios.post('http://localhost:8080/api/logout')
                 .then(response => {

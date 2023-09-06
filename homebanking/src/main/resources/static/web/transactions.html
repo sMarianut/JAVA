@@ -22,33 +22,47 @@
 
 <body>
     <div id="app">
-        <header class="d-flex flex-column align-items-center justify-content-center gap-3">
+        <header class="d-flex flex-column align-items-center justify-content-center gap-3 col-12">
             <div class="col-12 z-3">
-                <div class="navbar col-12">
+                <div class="navbar col-12 d-flex justify-content-center gap-5">
                     <a href="#" class="navbar__item -purple">
-                        <span class="navbar__icon">
+                        <span class="navbar__icon d-flex align-items-center justify-content-center flex-column">
                             <i class="bi bi-house"></i>
+                            <span class="fs-6">Home</span>
                         </span>
+
                     </a>
                     <a href="./loanapp.html" class="navbar__item -purple">
-                        <span class="navbar__icon">
+                        <span class="navbar__icon d-flex align-items-center justify-content-center flex-column">
                             <i class="bi bi-cash-coin"></i>
+                            <span class="fs-6">Loans</span>
                         </span>
                     </a>
-                    <a class="navbar__item -purple">
-                        <span class="navbar__icon">
-                            <i class="bi bi-person-fill-add"></i>
+                    <a href="./transactions.html" class="navbar__item -purple">
+                        <span class="navbar__icon d-flex align-items-center justify-content-center flex-column">
+                            <i class="bi bi-arrow-left-right"></i>
+                            <span class="fs-6">Transactions</span>
                         </span>
                     </a>
                     <a href="./accounts.html" class="navbar__item -purple">
-                        <span class="navbar__icon">
-                            <i class="bi bi-people-fill"></i>
+                        <span class="navbar__icon d-flex align-items-center justify-content-center flex-column">
+                            <i class="bi bi-people-fill "></i>
+                            <span class="fs-6">Accounts</span>
                         </span>
                     </a>
-                    <div class="navbar__item -purple">
+                    <div>
                         <a href="./cards.html" class="navbar__item -purple">
-                            <span class="navbar__icon">
+                            <span class="navbar__icon d-flex align-items-center justify-content-center flex-column">
                                 <i class="bi bi-credit-card"></i>
+                                <span class="fs-6">Cards</span>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="ms-5 ps-5">
+                        <a href="/api/logout" class="navbar__item -red">
+                            <span class="navbar__icon d-flex align-items-center justify-content-center flex-column">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span class="fs-6">Logout</span>
                             </span>
                         </a>
                     </div>

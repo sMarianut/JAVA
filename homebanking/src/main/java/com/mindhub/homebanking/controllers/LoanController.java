@@ -52,7 +52,7 @@ public class LoanController {
             return new ResponseEntity<>("Loan not found", HttpStatus.FORBIDDEN);
         }
         if(loansClient.contains(currentLoan)){
-            return new ResponseEntity<>("You cannot apply for the same loan", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("You already have this loan", HttpStatus.FORBIDDEN);
         }
         if(loanApplicationDTO.getAmount() <= 0){
             return new ResponseEntity<>("the amount couldn't be empty, try again", HttpStatus.FORBIDDEN);
