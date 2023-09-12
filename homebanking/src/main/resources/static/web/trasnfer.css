@@ -510,3 +510,6 @@
 .loanForm{
   background-image: url(./images/trasnfer-bg.svg);
 }
+.formm{
+  box-shadow: #000 0 0 10px;
+}

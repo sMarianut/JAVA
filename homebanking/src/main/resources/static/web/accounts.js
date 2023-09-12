@@ -13,7 +13,7 @@ createApp({
     },
     created() {
         this.loadData()
-        this.loadLoans()
+
 
     },
     methods: {
@@ -27,7 +27,16 @@ createApp({
 
                 })
                 .catch(error => console.error(error))
-        }
+            axios.get('/api/clients/current')
+                .then(res => {
+                    console.log(res.data.loans);
+                    this.firstName = res.data.firstName
+                    this.loans = res.data.loans
+                    console.log(this.loans);
+                    this.loans.sort((a, b) => a.id - b.id)
+                })
+                .catch(error => console.error(error))
+        },
         logout() {
             axios.post('http://localhost:8080/api/logout')
                 .then(response => {
@@ -42,7 +51,13 @@ createApp({
                 showLoaderOnConfirm: true, preConfirm: login => {
                     return axios
                         .post('/api/clients/current/accounts')
-                        .then(response => { location.href = './accounts.html'; })
+                        .then(response => {
+                            Swal.fire(
+                                'Good job!',
+                                'You clicked the button!',
+                                'success',
+                                location.href = './accounts.html')
+                        })
                         .catch(error => {
                             Swal.fire({
                                 icon: 'error',
@@ -56,4 +71,3 @@ createApp({
     }
 }).mount('#app')
 
-///"/api/clients/current/accounts"
