@@ -112,11 +112,7 @@
                 <h1>Account resume {{accounts.number}}</h1>
                 <h3 class="pt-3 text-light transact">Your transactions</h3>
             </section>
-            <article class="d-flex justify-content-center align-items-center">
-                <h6 class="text-white col-2">get your transactions in-real time for the best managment</h6>
-                <img class="col-6 rounded" src="./images/transaction.jpg" alt="">
-            </article>
-            <article class="pt-5 pb-5 mb-5 table-responsive">
+            <article v-if="transactions.length > 0" class="pt-5 pb-5 mb-5 table-responsive">
                 <table class="w-50">
                     <thead>
                         <tr>
@@ -141,6 +137,25 @@
                             </template>
                         </tbody>
                 </table>
+            </article>
+            <article v-else class="d-flex flex-row gap-3 align-items-center col-12 p-5">
+                <img class="w-50 wachines" src="./images/ahahah.svg" alt="">
+                <div class="boxx3 col-12">
+                    <div class="imge3">
+                        <img src="./images/houseinfo.jpg" alt="houseliving.jng">
+                    </div>
+                    <div class="desc3">
+                        <h4 class="text-black">We have the best transactions sytem and security.</h4>
+                    </div>
+                </div>
+                <div class="boxx3 col-12">
+                    <div class="imge3">
+                        <img src="./images/ccountcrds.jpg" alt="houseliving.jng">
+                    </div>
+                    <div class="desc3">
+                        <h4 class="text-black">No worries about the safety of your money</h4>
+                    </div>
+                </div>
             </article>
         </main>
         <footer>

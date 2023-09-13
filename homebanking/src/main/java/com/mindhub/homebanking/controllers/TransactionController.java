@@ -1,5 +1,6 @@
 package com.mindhub.homebanking.controllers;
 
+import com.mindhub.homebanking.dtos.TransactionDTO;
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.models.Transaction;
@@ -14,14 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -29,9 +31,43 @@ public class TransactionController {
     @Autowired
     TransactionService transactionService;
     @Autowired
+    private TransactionRepository transactionRepository;
+    @Autowired
     private ClientService clientService;
     @Autowired
+    private AccountRepository accountRepository;
+    @Autowired
     private AccountService accountService;
+
+    @GetMapping("/transactions/findDate")
+    public ResponseEntity<Object> getTransactionsbyDateTime(@RequestParam String dateInit,
+                                                          @RequestParam String dateEnd,
+                                                          @RequestParam String numberAcc,
+                                                          Authentication authentication){
+        Client current = clientService.findByEmail(authentication.getName());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+
+        if (!accountRepository.existsByNumber(numberAcc)){
+            return new ResponseEntity<>("this account dont exist", HttpStatus.BAD_REQUEST);
+        }
+        if (current == null){
+            return new ResponseEntity<>("you are not allowed to see this", HttpStatus.FORBIDDEN);
+        }
+        if (dateInit == null){
+           return new ResponseEntity<>("Please, fill the date requeriment", HttpStatus.BAD_REQUEST);
+        }else if (dateEnd == null){
+            new ResponseEntity<>("Please, fill the date end requeriment", HttpStatus.BAD_REQUEST);
+        }
+        if (dateInit.equals(dateEnd)){
+            return new ResponseEntity<>("you cannot do this", HttpStatus.BAD_REQUEST);
+        }
+        LocalDateTime localDateTime = LocalDateTime.parse(dateInit, formatter);
+        LocalDateTime localDateTime2 = LocalDateTime.parse(dateEnd, formatter);
+        List<Transaction> transf = transactionRepository.findByDateBetweenAndAccountNumber(localDateTime, localDateTime2, numberAcc);
+
+
+        return new ResponseEntity<>("pete", HttpStatus.OK);
+    }
     @Transactional
     @PostMapping("/transactions")
     public ResponseEntity<Object> createTransaction(@RequestParam String amount,
