@@ -11,7 +11,9 @@ createApp({
             accounts: [],
             cardType: null,
             cardColor: null,
-            showForm: false
+            showForm: false,
+            mostrarForm: false,
+            idCard: null
         }
     },
     created() {
@@ -22,7 +24,7 @@ createApp({
             axios.get('/api/clients/current/cards')
                 .then(res => {
                     this.clients = res
-                    this.cards = res.data
+                    this.cards = res.data.filter(card => card.onCard)
                     console.log(this.cards);
                     this.debit = this.cards.filter(card => card.cardType == "DEBIT")
                     this.credit = this.cards.filter(card => card.cardType == "CREDIT")
@@ -33,6 +35,9 @@ createApp({
         },
         toggleForm() {
             this.showForm = !this.showForm
+        },
+        showDelete() {
+            this.mostrarForm = !this.mostrarForm
         },
         createCard() {
             Swal.fire({
@@ -52,6 +57,14 @@ createApp({
                         });
                 }, allowOutsideClick: () => !Swal.isLoading(),
             })
+        },
+        deleteCard() {
+            console.log();
+            axios.patch('/api/clients/current/deleteCard', `id=${this.idCard}`)
+                .then(res => {
+                    window.location.href = './cards.html'
+                })
+                .catch(error => console.error(error))
         }
 
     }

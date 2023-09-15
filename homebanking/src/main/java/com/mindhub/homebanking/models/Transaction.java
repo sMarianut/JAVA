@@ -16,6 +16,7 @@ public class Transaction {
     private String description;
     private LocalDateTime date;
     private transactionType type;
+    private boolean isOnTransf;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_account")
     private Account account;
@@ -23,11 +24,12 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(double amount, String description, LocalDateTime date, transactionType type) {
+    public Transaction(double amount, String description, LocalDateTime date, transactionType type, boolean isOnTransf) {
         this.amount = amount;
         this.description = description;
         this.date = date;
         this.type = type;
+        this.isOnTransf = isOnTransf;
     }
 
     public Long getId() {
@@ -72,5 +74,13 @@ public class Transaction {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public boolean isOnTransf() {
+        return isOnTransf;
+    }
+
+    public void setOnTransf(boolean onTransf) {
+        isOnTransf = onTransf;
     }
 }

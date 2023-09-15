@@ -8,7 +8,7 @@ createApp({
             creationDate: '',
             number: '',
             balance: Number,
-            loans: []
+            loans: [],
         }
     },
     created() {
@@ -21,7 +21,7 @@ createApp({
             axios.get('http://localhost:8080/api/clients/current/accounts')
                 .then(res => {
                     console.log(res);
-                    this.accounts = res.data
+                    this.accounts = res.data.filter(acc => acc.accOn)
                     console.log(this.accounts);
                     localStorage.setItem('client', JSON.stringify(this.clients))
 
@@ -37,6 +37,14 @@ createApp({
                 })
                 .catch(error => console.error(error))
         },
+        deleteAcc(id) {
+            axios.patch('/api/clients/current/deleteAcc', `id=${id}`)
+                .then(res => {
+                    console.log(res);
+                })
+                .catch(error => console.error(error))
+        }
+        ,
         logout() {
             axios.post('http://localhost:8080/api/logout')
                 .then(response => {

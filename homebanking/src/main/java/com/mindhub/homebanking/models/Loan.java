@@ -17,6 +17,7 @@ public class Loan {
     private long Id;
     private String name;
     private double maxAmount;
+//    private double interest;
     @ElementCollection(fetch = FetchType.EAGER)
     @Column(name = "payments")
     private List<Integer> payments = new ArrayList<>();
@@ -39,7 +40,13 @@ public class Loan {
         this.payments = payments;
     }
 
-
+//    public double getInterest() {
+//        return interest;
+//    }
+//
+//    public void setInterest(double interest) {
+//        this.interest = interest;
+//    }
 
     public String getName() {
         return name;

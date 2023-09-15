@@ -18,11 +18,13 @@ public class CardDTO{
     private int cvv;
     private LocalDate fromDate;
     private LocalDate thruDate;
+    private boolean isOnCard;
     private Set<Client> clients;
 
     public CardDTO() {
     }
     public CardDTO(Card card){
+        this.id = card.getId();
         this.cardHolder = card.getCardHolder();
         this.cardType = card.getCardType();
         this.cardColor = card.getCardColor();
@@ -30,6 +32,11 @@ public class CardDTO{
         this.cvv = card.getCvv();
         this.thruDate = card.getThruDate();
         this.fromDate = card.getFromDate();
+        this.isOnCard = card.isOnCard();
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getCardHolder() {
@@ -58,5 +65,9 @@ public class CardDTO{
 
     public LocalDate getThruDate() {
         return thruDate;
+    }
+
+    public boolean isOnCard() {
+        return isOnCard;
     }
 }

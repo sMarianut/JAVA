@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -79,7 +80,7 @@ public class LoanController {
             double amountPlus = ((double)(loanApplicationDTO.getAmount()) + (loanApplicationDTO.getAmount()*0.2));
             ClientLoan clientLoanNew = new ClientLoan(amountPlus,loanApplicationDTO.getPaymentsReq(),current,currentLoan);
             clientLoanService.addClientLoan(clientLoanNew);
-            Transaction loanApp = new Transaction(loanApplicationDTO.getAmount(),"Your loan "+ currentLoan.getName() + " was approved", LocalDateTime.now(),transactionType.CREDIT);
+            Transaction loanApp = new Transaction(loanApplicationDTO.getAmount(),"Your loan "+ currentLoan.getName() + " was approved", LocalDateTime.now(),transactionType.CREDIT, true);
             accountLoan.setBalance(loanApplicationDTO.getAmount());
             accountLoan.addTransaction(loanApp);
             accountService.addAccount(accountLoan);
@@ -87,5 +88,19 @@ public class LoanController {
         }
         return new ResponseEntity<>("Created, brou", HttpStatus.OK);
     }
-
+//@Transactional
+//@PostMapping("/admin/loanCreate")
+//public ResponseEntity<Object> createLoan(Authentication authentication, @RequestBody Loan loan){
+//
+//        if (authentication != null && authentication.getPrincipal() instanceof UserDetails){
+//            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+//        }
+//
+//        Client admin = clientService.findByEmail(authentication.getName());
+//        if (admin == null){
+//            new ResponseEntity<>("You cannot se this", HttpStatus.FORBIDDEN);
+//        }
+//        if (admin.getEmail().contains())
+//
+//}
 }

@@ -342,7 +342,7 @@
                         <div class="accordion-body border cardbg d-flex justify-content-center">
                             <div>
                                 <p>Your Gold Credit Cards</p>
-                                <template v-for="(card, index) of credit">
+                                <template v-for="(card, index) of credit" :key="card.id">
                                     <aside v-if="card.cardColor == 'GOLD'"
                                         :class="{'card-front': card.cardColor == 'GOLD', 'card-front3': card.cardColor == 'TITANIUM', 'card-front2': card.cardColor == 'SILVER'}">
                                         <label class="number2 mb-3" for="cardNumber">
@@ -401,7 +401,7 @@
                             </div>
                             <div>
                                 <p>Your Silver Credit Cards</p>
-                                <template v-for="(card, index) of credit">
+                                <template v-for="(card, index) of credit" :key="card.id">
                                     <aside v-if="card.cardColor == 'SILVER'"
                                         :class="{'card-front': card.cardColor == 'GOLD', 'card-front3': card.cardColor == 'TITANIUM', 'card-front2': card.cardColor == 'SILVER'}">
                                         <label class="number2 mb-3" for="cardNumber">
@@ -521,6 +521,18 @@
                     </div>
                 </div>
             </section>
+            <button @click.prevent="showDelete"> <span v-if="!mostrarForm">Do you want to eliminate a card?</span>
+                <span v-else>Cancel</span></button>
+            <article v-if="mostrarForm" class="d-flex justify-content-center align-items-center flex-column">
+                <label for="deletecard">Select a card</label>
+                <template v-for="(card, index) of credit && debit">
+                    <select name="deletecard" id="" v-model="idCard">Select card to delete
+                        <option :value="card.id">{{card.number}}</option>
+                    </select>
+                </template>
+                <button @click.prevent="deleteCard">Delete this card </button>
+            </article>
+
 
 
         </main>

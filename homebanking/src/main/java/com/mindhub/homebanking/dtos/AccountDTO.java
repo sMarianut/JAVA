@@ -13,6 +13,7 @@ public class AccountDTO {
 
     private LocalDate creationDate;
     private double balance;
+    private boolean isAccOn;
     private Set<TransactionDTO> transactions = new HashSet<>();
 
     public AccountDTO() {
@@ -23,10 +24,15 @@ public class AccountDTO {
         this.creationDate = account.getCreationDate();
         this.balance = account.getBalance();
         this.transactions = new HashSet<>();
+        this.isAccOn = account.isAccOn();
         for (Transaction tr : account.getTransactions()) {
             this.transactions.add(new TransactionDTO(tr));
         }
 
+    }
+
+    public boolean isAccOn() {
+        return isAccOn;
     }
 
     public Set<TransactionDTO> getTransactions() {

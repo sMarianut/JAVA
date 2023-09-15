@@ -1,5 +1,9 @@
 package com.mindhub.homebanking.controllers;
 
+import com.lowagie.text.*;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
 import com.mindhub.homebanking.dtos.TransactionDTO;
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
@@ -12,12 +16,15 @@ import com.mindhub.homebanking.service.AccountService;
 import com.mindhub.homebanking.service.ClientService;
 import com.mindhub.homebanking.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -41,32 +48,85 @@ public class TransactionController {
 
     @GetMapping("/transactions/findDate")
     public ResponseEntity<Object> getTransactionsbyDateTime(@RequestParam String dateInit,
-                                                          @RequestParam String dateEnd,
-                                                          @RequestParam String numberAcc,
-                                                          Authentication authentication){
+                                                            @RequestParam String dateEnd,
+                                                            @RequestParam String numberAcc,
+                                                            Authentication authentication) throws DocumentException, IOException {
         Client current = clientService.findByEmail(authentication.getName());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
-        if (!accountRepository.existsByNumber(numberAcc)){
-            return new ResponseEntity<>("this account dont exist", HttpStatus.BAD_REQUEST);
-        }
-        if (current == null){
+        if (current == null) {
             return new ResponseEntity<>("you are not allowed to see this", HttpStatus.FORBIDDEN);
         }
-        if (dateInit == null){
-           return new ResponseEntity<>("Please, fill the date requeriment", HttpStatus.BAD_REQUEST);
-        }else if (dateEnd == null){
+        if (!accountRepository.existsByNumber(numberAcc)) {
+            return new ResponseEntity<>("this account dont exist", HttpStatus.BAD_REQUEST);
+        }
+        if (dateInit.isBlank()) {
+            return new ResponseEntity<>("Please, fill the date requeriment", HttpStatus.BAD_REQUEST);
+        }
+        if (dateEnd.isBlank()) {
             new ResponseEntity<>("Please, fill the date end requeriment", HttpStatus.BAD_REQUEST);
         }
-        if (dateInit.equals(dateEnd)){
+        if (dateInit.equals(dateEnd)) {
             return new ResponseEntity<>("you cannot do this", HttpStatus.BAD_REQUEST);
         }
         LocalDateTime localDateTime = LocalDateTime.parse(dateInit, formatter);
         LocalDateTime localDateTime2 = LocalDateTime.parse(dateEnd, formatter);
         List<Transaction> transf = transactionRepository.findByDateBetweenAndAccountNumber(localDateTime, localDateTime2, numberAcc);
+        if (transf.size() <= 0){
+            return new ResponseEntity<>("No transactions finded.", HttpStatus.NOT_FOUND);
+        }
+        Document doc = new Document();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        PdfWriter.getInstance(doc, out);
+        doc.open();
+        PdfPTable tableTitle = new PdfPTable(1);
+        PdfPCell cell = new PdfPCell();
+        cell.setBorder(PdfPCell.NO_BORDER);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell.setPadding(10);
+        cell.addElement(new Paragraph("Your transactions", new Font(Font.HELVETICA, 24)));
+        tableTitle.addCell(cell);
+        doc.add(tableTitle);
 
+        PdfPTable table = new PdfPTable(4);
+        table.addCell("Type");
+        table.addCell("Description");
+        table.addCell("Amount");
+        table.addCell("Date");
 
-        return new ResponseEntity<>("pete", HttpStatus.OK);
+        for (Transaction transaction : transf) {
+            table.addCell(transaction.getType().toString());
+            table.addCell(transaction.getDescription());
+            table.addCell(String.valueOf(transaction.getAmount()));
+            table.addCell(transaction.getDate().format(formatter));
+        }
+        doc.add(table);
+        PdfPCell spacerCell = new PdfPCell();
+        spacerCell.setFixedHeight(50);
+        spacerCell.setBorder(PdfPCell.NO_BORDER);
+        spacerCell.setColspan(4);
+        doc.add(spacerCell);
+        PdfPTable logo = new PdfPTable(2);
+        logo.setWidthPercentage(100);
+        Image img = Image.getInstance("C:\\Users\\leone\\OneDrive\\Escritorio\\Cosas\\Homebanking Mindhub Tasks\\homebanking\\src\\main\\resources\\static\\web\\images\\banklogo.png");
+        img.scaleToFit(50, 50);
+        img.setAbsolutePosition(50, 50);
+        img.setAlignment(Image.ALIGN_BASELINE);
+        PdfPCell imageCell = new PdfPCell(img);
+        imageCell.setBorder(PdfPCell.NO_BORDER);
+        logo.addCell(imageCell);
+        PdfPCell textCell = new PdfPCell();
+        textCell.setBorder(PdfPCell.NO_BORDER);
+        textCell.addElement(new Phrase("MindHub Brothers, pa"));
+        logo.addCell(textCell);
+
+        doc.add(logo);
+        doc.close();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_TYPE, "application/pdf");
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=transactions-Table.pdf");
+        byte[] pdf = out.toByteArray();
+        return new ResponseEntity<>(pdf,headers, HttpStatus.CREATED);
     }
     @Transactional
     @PostMapping("/transactions")
@@ -103,8 +163,8 @@ public class TransactionController {
        }else{
            accOrigin.setBalance(accOrigin.getBalance() - Double.parseDouble(amount));
            destinationA.setBalance(destinationA.getBalance() + Double.parseDouble(amount));
-           Transaction TransacDebit = new Transaction(Double.parseDouble(amount),description, LocalDateTime.now(), transactionType.DEBIT);
-           Transaction TransacCredit = new Transaction(Double.parseDouble(amount),description, LocalDateTime.now(), transactionType.CREDIT);
+           Transaction TransacDebit = new Transaction(Double.parseDouble(amount),description, LocalDateTime.now(), transactionType.DEBIT, true);
+           Transaction TransacCredit = new Transaction(Double.parseDouble(amount),description, LocalDateTime.now(), transactionType.CREDIT, true);
            accOrigin.addTransaction(TransacDebit);
            destinationA.addTransaction(TransacCredit);
            accountService.addAccount(accOrigin);

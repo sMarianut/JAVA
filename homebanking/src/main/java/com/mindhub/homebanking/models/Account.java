@@ -21,6 +21,7 @@ public class Account {
 
     private LocalDate creationDate;
     private double balance;
+    private boolean accOn;
 
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -28,15 +29,23 @@ public class Account {
     private Client client;
     @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
     private Set<Transaction> transactions = new HashSet<>();
-    //CONSTRUCTOR PREDETERMINADO
 
     public Account() {
     }
 
-    public Account(String number, LocalDate creationDate, double balance) {
+    public Account(String number, LocalDate creationDate, double balance, boolean accOn) {
         this.number = number;
         this.creationDate = creationDate;
         this.balance = balance;
+        this.accOn = accOn;
+    }
+
+    public boolean isAccOn() {
+        return accOn;
+    }
+
+    public void setAccOn(boolean accOn) {
+        this.accOn = accOn;
     }
 
     public long getId() {

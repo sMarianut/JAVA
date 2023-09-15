@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
@@ -70,6 +71,7 @@ public List<CardDTO> getCards(Authentication authentication){
         Client current = clientService.findByEmail(clientA);
         List<CardType> currentTypes = current.getCards().stream().map(card -> card.getCardType()).collect(toList());
         List<CardColor> currentColors = current.getCards().stream().map(card -> card.getCardColor()).collect(toList());
+        List<Card> filterCard = cardRepository.findByClientAndIsOnCardTrue(current);
 
 
 
@@ -77,17 +79,43 @@ public List<CardDTO> getCards(Authentication authentication){
             return new ResponseEntity<>("You has to fill all the requirements.", HttpStatus.FORBIDDEN);
 
         }
-        for (Card card : current.getCards()) {
+        for (Card card : filterCard) {
             if (card.getCardType().equals(cardType) && card.getCardColor().equals(cardColor)) {
                 return new ResponseEntity<>("You already have this card.", HttpStatus.FORBIDDEN);
             }
         }
         String number = CardNumber();
         int cvvR = cvv();
-        Card newCard = new Card(current.getFirstName()+" "+current.getLastName(), cardType, cardColor, number,cvvR, LocalDate.now(), LocalDate.now().plusYears(5));
+        Card newCard = new Card(current.getFirstName()+" "+current.getLastName(), cardType, cardColor, number,cvvR, LocalDate.now(), LocalDate.now().plusYears(5), true);
         current.addCards(newCard);
         clientService.addClient(current);
         cardService.addCard(newCard);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+    @PatchMapping("/api/clients/current/deleteCard")
+    public ResponseEntity<Object> deleteCard(Authentication authentication, @RequestParam long id){
+        Client current = clientService.findByEmail(authentication.getName());
+        Card currentCard = cardService.findById(id);
+        if (current == null){
+            return new ResponseEntity<>("Client not found", HttpStatus.NOT_FOUND);
+
+        }
+        if (currentCard == null){
+            return new ResponseEntity<>("Card not found.", HttpStatus.NOT_FOUND);
+
+        }
+        if (!current.getCards().contains(currentCard)){
+            return new ResponseEntity<>("You are not the owner of this card", HttpStatus.FORBIDDEN);
+
+        }
+        if (currentCard.isOnCard()== false){
+            return new ResponseEntity<>("You cannot remove a removed card.", HttpStatus.BAD_REQUEST);
+        }
+        else {
+            currentCard.setOnCard(false);
+            cardService.addCard(currentCard);
+        }
+    return new ResponseEntity<>("Your card was succesfully removed.", HttpStatus.OK);
+    }
 }
+

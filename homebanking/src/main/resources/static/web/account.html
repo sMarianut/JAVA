@@ -157,6 +157,17 @@
                     </div>
                 </div>
             </article>
+            <button @click.prevent="showSearch">Search transactions</button>
+            <article>
+                <form v-if="showForm" action="">
+                    <label for="date1">Put the date from:</label>
+                    <input type="datetime-local" id="date1" v-model="dateInit">
+                    <label for="date1">Put the date to:</label>
+                    <input type="datetime-local" id="date2" v-model="dateEnd">
+                    <button @click.prevent="searchTransactions">Search</button>
+                </form>
+            </article>
+
         </main>
         <footer>
             <div class="footer">

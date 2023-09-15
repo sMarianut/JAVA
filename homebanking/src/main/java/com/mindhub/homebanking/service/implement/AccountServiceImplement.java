@@ -4,6 +4,7 @@ import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.repositories.TransactionRepository;
 import com.mindhub.homebanking.service.AccountService;
 import com.mindhub.homebanking.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ public class AccountServiceImplement implements AccountService {
     private ClientRepository clientRepository;
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired
+    private TransactionRepository transactionRepository;
 
     @Override
     public Account findById(long id) {
@@ -36,4 +39,5 @@ public class AccountServiceImplement implements AccountService {
     public Account findByNumber(String number) {
         return accountRepository.findByNumber(number);
     }
+
 }

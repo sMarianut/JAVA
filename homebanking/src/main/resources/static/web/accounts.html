@@ -113,7 +113,9 @@
             </section>
             <h1 class="text-black">Welcome to your accounts! {{firstName}}</h1>
             <article class="cardsT d-flex flex-column flex-xl-row gap-5 pb-5">
-                <template class="shadow" v-for="account of accounts">
+
+                <template class="shadow" v-for="account of accounts" :key="account.id">
+                    <button class="h-25" @click.prevent="deleteAcc(account.id)">delete acc</button>
                     <a :href="'./account.html?id='+ account.id">
                         <div class="card">
                             <div class="top-section">
@@ -179,7 +181,7 @@
             </article>
             <!-- <h4 class="text-black">Saving with us is the best option in the all CORDON INDUSTRIAL PA</h4> -->
             </article>
-            <button v-if="accounts.length < 3" @click.prevent="createAcc">CREATE AN ACCOUNT</button>
+            <button @click.prevent="createAcc">CREATE AN ACCOUNT</button>
             </section>
             <h4>Your Loans:</h4>
             <section

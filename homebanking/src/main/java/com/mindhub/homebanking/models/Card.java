@@ -19,6 +19,7 @@ public class Card {
     private int cvv;
     private LocalDate fromDate;
     private LocalDate thruDate;
+    private boolean isOnCard;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "clientCard_id")
     private Client client;
@@ -26,7 +27,7 @@ public class Card {
     public Card() {
     }
 
-    public Card(String cardHolder, CardType cardType, CardColor cardColor, String number, int cvv, LocalDate fromDate, LocalDate thruDate) {
+    public Card(String cardHolder, CardType cardType, CardColor cardColor, String number, int cvv, LocalDate fromDate, LocalDate thruDate, boolean isOnCard) {
         this.cardHolder = cardHolder;
         this.cardType = cardType;
         this.cardColor = cardColor;
@@ -34,6 +35,7 @@ public class Card {
         this.cvv = cvv;
         this.fromDate = fromDate;
         this.thruDate = thruDate;
+        this.isOnCard = isOnCard;
     }
 
 
@@ -44,6 +46,14 @@ public class Card {
 
     public String getCardHolder() {
         return cardHolder;
+    }
+
+    public boolean isOnCard() {
+        return isOnCard;
+    }
+
+    public void setOnCard(boolean onCard) {
+        isOnCard = onCard;
     }
 
     public void setCardHolder(String cardHolder) {

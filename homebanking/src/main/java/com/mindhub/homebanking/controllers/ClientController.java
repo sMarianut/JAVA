@@ -64,7 +64,7 @@ public class ClientController{
             return new ResponseEntity<>("This email is already in use, BRODER", HttpStatus.FORBIDDEN);
         }
         String number = Rnumber(); ///variable
-        Account newAccount = new Account(number, this.creationDate ,0);
+        Account newAccount = new Account(number, this.creationDate ,0, true);
         Client newClient = new Client(firstName,lastName,email,passwordEncoder.encode(password));
         clientService.addClient(newClient);
         newClient.addAccount(newAccount);

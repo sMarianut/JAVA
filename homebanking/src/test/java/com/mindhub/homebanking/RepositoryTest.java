@@ -1,12 +1,7 @@
 package com.mindhub.homebanking;
 
-import com.mindhub.homebanking.models.Loan;
-import com.mindhub.homebanking.models.Transaction;
-import com.mindhub.homebanking.models.transactionType;
-import com.mindhub.homebanking.repositories.ClientLoanRespository;
-import com.mindhub.homebanking.repositories.ClientRepository;
-import com.mindhub.homebanking.repositories.LoanRepository;
-import com.mindhub.homebanking.repositories.TransactionRepository;
+import com.mindhub.homebanking.models.*;
+import com.mindhub.homebanking.repositories.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -32,6 +27,8 @@ public class RepositoryTest {
     private ClientRepository clientRepository;
     @Autowired
     private TransactionRepository transactionRepository;
+    @Autowired
+    private AccountRepository accountRepository;
 
 
 
@@ -66,6 +63,13 @@ public class RepositoryTest {
         }
 
     }
+//    @Test
+//    public void findByClientAndStatusIsTrue(){
+//        long id =1 ;
+//        Client client = clientRepository.findById(id).orElse(null);
+//        List<Account> s = accountRepository.findByClientAndStatusIsTrue(client);
+//        assertThat(s,is(not(empty())));
+//    }
 
 
 }
