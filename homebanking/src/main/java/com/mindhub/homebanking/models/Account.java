@@ -22,6 +22,8 @@ public class Account {
     private LocalDate creationDate;
     private double balance;
     private boolean accOn;
+    private String type;
+    private AccountType accountType;
 
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -33,11 +35,20 @@ public class Account {
     public Account() {
     }
 
-    public Account(String number, LocalDate creationDate, double balance, boolean accOn) {
+    public Account(String number, LocalDate creationDate, double balance, boolean accOn, AccountType accountType) {
         this.number = number;
         this.creationDate = creationDate;
         this.balance = balance;
         this.accOn = accOn;
+        this.accountType = accountType;
+    }
+
+    public AccountType getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(AccountType accountType) {
+        this.accountType = accountType;
     }
 
     public boolean isAccOn() {
@@ -74,6 +85,14 @@ public class Account {
 
     public void setBalance(double balance) {
         this.balance = balance;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     @JsonIgnore

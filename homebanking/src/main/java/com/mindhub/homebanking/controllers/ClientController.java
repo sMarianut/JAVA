@@ -3,6 +3,7 @@ package com.mindhub.homebanking.controllers;
 import com.mindhub.homebanking.dtos.AccountDTO;
 import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.models.Account;
+import com.mindhub.homebanking.models.AccountType;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
@@ -63,8 +64,8 @@ public class ClientController{
 
             return new ResponseEntity<>("This email is already in use, BRODER", HttpStatus.FORBIDDEN);
         }
-        String number = Rnumber(); ///variable
-        Account newAccount = new Account(number, this.creationDate ,0, true);
+        String number = Rnumber();
+        Account newAccount = new Account(number, this.creationDate ,0, true, AccountType.CURRENT);
         Client newClient = new Client(firstName,lastName,email,passwordEncoder.encode(password));
         clientService.addClient(newClient);
         newClient.addAccount(newAccount);

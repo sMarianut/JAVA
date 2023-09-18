@@ -1,6 +1,7 @@
 const { createApp } = Vue
 createApp({
     data() {
+
         return {
             client: [],
             accounts: [],
@@ -47,25 +48,23 @@ createApp({
             this.showForm = true
         },
         searchTransactions() {
-            console.log(this.dateEnd, this.dateInit);
-            axios.get('/api/transactions/findDate', { params: { dateInit: this.dateInit + ':00', dateEnd: this.dateEnd + ':00', numberAcc: this.numberAcc }, responseType: 'blob' })
-                .then(response => {
-
+            const url = `http://localhost:8080/api/transactions/findDate?dateInit=${this.dateInit}:00&dateEnd=${this.dateEnd}:00&numberAcc=${this.numberAcc}`;
+            axios
+                .get(url, { responseType: 'blob' })
+                .then((response) => {
+                    console.log(response);
                     const blob = new Blob([response.data], { type: 'application/pdf' });
                     const url = window.URL.createObjectURL(blob);
-
                     const a = document.createElement('a');
-                    a.style.display = 'none';
                     a.href = url;
                     a.download = 'transactions-Table.pdf';
-                    document.body.appendChild(a);
                     a.click();
                     window.URL.revokeObjectURL(url);
                 })
-                .catch(error => {
-                    const blob = new Blob([response.data], { type: 'text/plain' });
-                    console.error(error)
-                })
+                .catch((error) => {
+                    console.log(JSON.stringify(error));
+
+                });
         }
 
     }

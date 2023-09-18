@@ -80,13 +80,13 @@ public class LoanController {
             double amountPlus = ((double)(loanApplicationDTO.getAmount()) + (loanApplicationDTO.getAmount()*0.2));
             ClientLoan clientLoanNew = new ClientLoan(amountPlus,loanApplicationDTO.getPaymentsReq(),current,currentLoan);
             clientLoanService.addClientLoan(clientLoanNew);
-            Transaction loanApp = new Transaction(loanApplicationDTO.getAmount(),"Your loan "+ currentLoan.getName() + " was approved", LocalDateTime.now(),transactionType.CREDIT, true);
             accountLoan.setBalance(loanApplicationDTO.getAmount());
+            Transaction loanApp = new Transaction(loanApplicationDTO.getAmount(),"Your loan "+ currentLoan.getName() + " was approved", LocalDateTime.now(),transactionType.CREDIT, accountLoan.getBalance(), true);
             accountLoan.addTransaction(loanApp);
             accountService.addAccount(accountLoan);
             transactionService.addTransaction(loanApp);
         }
-        return new ResponseEntity<>("Created, brou", HttpStatus.OK);
+        return new ResponseEntity<>("Your loan was approved!, Enjoy!", HttpStatus.OK);
     }
 //@Transactional
 //@PostMapping("/admin/loanCreate")

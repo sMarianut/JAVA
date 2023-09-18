@@ -46,15 +46,15 @@ public class HomebankingApplication {
             Card debitCard2 = new Card("Melba GGEz", CardType.DEBIT, CardColor.SILVER, "9184-2954-9023-6438", 911, this.creationDate.plusDays(1), this.creationDate2.plusYears(5), true);
             Card debitCard3 = new Card("Ippo Makanouchi", CardType.DEBIT, CardColor.SILVER, "1234-4567-6789-1011", 333, this.creationDate.plusDays(7),
                     this.creationDate.plusDays(7).plusYears(5), true);
-            Account account1 = new Account("VIN001", creationDate, 5000, true);
-            Account account2 = new Account("VIN002", creationDate2, 7000, true);
-            Account account3 = new Account("VIN003", this.creationDate, 51000, true);
-            Account account4 = new Account("VIN004", this.creationDate2, 75000, true);
-            Transaction transaction1 = new Transaction(2000, "Other", date, transactionType.CREDIT,true);
-            Transaction transaction2 = new Transaction(-1500, "Others", date2, transactionType.DEBIT,true);
-            Loan loan1 = new Loan("Mortgage", 500000, Arrays.asList(12, 24, 36, 48, 60));
-            Loan loan2 = new Loan("Personal", 10000, Arrays.asList(6, 12, 24));
-            Loan loan3 = new Loan("Automotive", 300000, Arrays.asList(6, 12, 24, 36));
+            Account account1 = new Account("VIN001", creationDate, 5000, true,AccountType.CURRENT);
+            Account account2 = new Account("VIN002", creationDate2, 7000, true,AccountType.CURRENT);
+            Account account3 = new Account("VIN003", this.creationDate, 51000, true,AccountType.CURRENT);
+            Account account4 = new Account("VIN004", this.creationDate2, 75000, true, AccountType.CURRENT);
+            Transaction transaction1 = new Transaction(2000, "Other", date, transactionType.CREDIT,account1.getBalance(),true);
+            Transaction transaction2 = new Transaction(-1500, "Others", date2, transactionType.DEBIT,account1.getBalance(),true);
+            Loan loan1 = new Loan("Mortgage", 500000, Arrays.asList(12, 24, 36, 48, 60),20);
+            Loan loan2 = new Loan("Personal", 10000, Arrays.asList(6, 12, 24),30);
+            Loan loan3 = new Loan("Automotive", 300000, Arrays.asList(6, 12, 24, 36), 40);
             loanRepository.save(loan1);
             loanRepository.save(loan2);
             loanRepository.save(loan3);

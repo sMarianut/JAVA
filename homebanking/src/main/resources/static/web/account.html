@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Account details for yours transactions and invest data">
     <title>Account Details</title>
-    <link rel="shortcut icon" href="./images/safe2.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="./images/banklogo.png" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -116,10 +116,11 @@
                 <table class="w-50">
                     <thead>
                         <tr>
-                            <th class="text-dark">Type</th>
-                            <th class="text-dark">Description</th>
-                            <th class="text-dark">Date</th>
-                            <th class="text-dark">Amount</th>
+                            <th class="text-dark" scope="col">Type</th>
+                            <th class="text-dark" scope="col">Description</th>
+                            <th class="text-dark" scope="col">Date</th>
+                            <th class="text-dark" scope="col">Amount</th>
+                            <th class="text-dark" scope="col">Account balance</th>
                         </tr>
                         <thead>
                         <tbody>
@@ -133,6 +134,7 @@
                                         {{dateForm.hour[index]}} {{dateForm.date[index]}}
                                     </td>
                                     <td class="text-dark">$ {{transaction.amount}}</td>
+                                    <td class="text-dark">$ {{transaction.currentBalance}}</td>
                                 </tr>
                             </template>
                         </tbody>

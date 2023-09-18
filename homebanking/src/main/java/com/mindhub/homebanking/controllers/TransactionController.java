@@ -54,6 +54,7 @@ public class TransactionController {
         Client current = clientService.findByEmail(authentication.getName());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
+
         if (current == null) {
             return new ResponseEntity<>("you are not allowed to see this", HttpStatus.FORBIDDEN);
         }
@@ -64,17 +65,18 @@ public class TransactionController {
             return new ResponseEntity<>("Please, fill the date requeriment", HttpStatus.BAD_REQUEST);
         }
         if (dateEnd.isBlank()) {
-            new ResponseEntity<>("Please, fill the date end requeriment", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Please, fill the date end requeriment",HttpStatus.BAD_REQUEST);
         }
         if (dateInit.equals(dateEnd)) {
-            return new ResponseEntity<>("you cannot do this", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("You cant use the same date", HttpStatus.BAD_REQUEST);
         }
         LocalDateTime localDateTime = LocalDateTime.parse(dateInit, formatter);
         LocalDateTime localDateTime2 = LocalDateTime.parse(dateEnd, formatter);
         List<Transaction> transf = transactionRepository.findByDateBetweenAndAccountNumber(localDateTime, localDateTime2, numberAcc);
         if (transf.size() <= 0){
-            return new ResponseEntity<>("No transactions finded.", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("No transactions finded.",HttpStatus.NOT_FOUND);
         }
+
         Document doc = new Document();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         PdfWriter.getInstance(doc, out);
@@ -163,8 +165,8 @@ public class TransactionController {
        }else{
            accOrigin.setBalance(accOrigin.getBalance() - Double.parseDouble(amount));
            destinationA.setBalance(destinationA.getBalance() + Double.parseDouble(amount));
-           Transaction TransacDebit = new Transaction(Double.parseDouble(amount),description, LocalDateTime.now(), transactionType.DEBIT, true);
-           Transaction TransacCredit = new Transaction(Double.parseDouble(amount),description, LocalDateTime.now(), transactionType.CREDIT, true);
+           Transaction TransacDebit = new Transaction(Double.parseDouble(amount),description, LocalDateTime.now(), transactionType.DEBIT,accOrigin.getBalance(), true);
+           Transaction TransacCredit = new Transaction(Double.parseDouble(amount),description, LocalDateTime.now(), transactionType.CREDIT, destinationA.getBalance(), true);
            accOrigin.addTransaction(TransacDebit);
            destinationA.addTransaction(TransacCredit);
            accountService.addAccount(accOrigin);
@@ -174,4 +176,8 @@ public class TransactionController {
        }
        return new ResponseEntity<>("Transaction succesfully created", HttpStatus.CREATED);
     }
+    @Transactional
+    @PostMapping("/transactions/posnet")
+    public ResponseEntity<Object> cardPayment(@RequestParam long idCard, @RequestBody cardPaymentDTO)
+
 }

@@ -16,6 +16,7 @@ public class Transaction {
     private String description;
     private LocalDateTime date;
     private transactionType type;
+    private double currentBalance;
     private boolean isOnTransf;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_account")
@@ -24,11 +25,12 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(double amount, String description, LocalDateTime date, transactionType type, boolean isOnTransf) {
+    public Transaction(double amount, String description, LocalDateTime date, transactionType type, double currentBalance, boolean isOnTransf) {
         this.amount = amount;
         this.description = description;
         this.date = date;
         this.type = type;
+        this.currentBalance = currentBalance;
         this.isOnTransf = isOnTransf;
     }
 
@@ -74,6 +76,14 @@ public class Transaction {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public double getCurrentBalance() {
+        return currentBalance;
+    }
+
+    public void setCurrentBalance(double currentBalance) {
+        this.currentBalance = currentBalance;
     }
 
     public boolean isOnTransf() {

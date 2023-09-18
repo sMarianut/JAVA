@@ -7,6 +7,8 @@
     <title>Client Manager</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.27/dist/sweetalert2.min.css">
     <link rel="shortcut icon" href="./images/banklogo.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -112,20 +114,22 @@
 
             </section>
             <h1 class="text-black">Welcome to your accounts! {{firstName}}</h1>
-            <article class="cardsT d-flex flex-column flex-xl-row gap-5 pb-5">
-
+            <article
+                class="cardsT d-flex flex-column flex-xl-row gap-5 pb-5 animate__animated animate__bounceIn animate__delay">
                 <template class="shadow" v-for="account of accounts" :key="account.id">
-                    <button class="h-25" @click.prevent="deleteAcc(account.id)">delete acc</button>
-                    <a :href="'./account.html?id='+ account.id">
-                        <div class="card">
-                            <div class="top-section">
-                                <div class="border"></div>
-                                <div class="icons">
-                                    <div class="logo">
-                                        <i class="bi bi-archive-fill"></i>
+                    <div class="card">
+                        <div class="top-section">
+                            <div class="border"></div>
+                            <div class="icons">
+                                <a @click.prevent="deleteAcc(account.id)">
+                                    <div class="logo delete d-flex gap-3 align-items-center">
+                                        <i class="fa-solid fa-user-xmark delete" style="color: #d10a0a;"></i>
+                                        <span class="deleteAcc ">Delete</span>
                                     </div>
-                                </div>
+                                </a>
                             </div>
+                        </div>
+                        <a :href="'./account.html?id='+ account.id">
                             <div class="bottom-section">
                                 <a :href="'./account.html?id='+ account.id">
                                     <h2 class="title">{{account.number}}</h2>
@@ -139,10 +143,14 @@
                                         <span class="big-text">Balance:</span>
                                         <span class="regular-text">${{account.balance}}</span>
                                     </div>
+                                    <div class="item">
+                                        <span class="big-text">Type:</span>
+                                        <span class="regular-text">{{account.accountType}}</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </template>
             </article>
             <article class="col-12 d-flex justify-content-evenly align-items-center p-3 gap-3">

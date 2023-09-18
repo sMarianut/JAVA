@@ -96,6 +96,8 @@ public List<CardDTO> getCards(Authentication authentication){
     public ResponseEntity<Object> deleteCard(Authentication authentication, @RequestParam long id){
         Client current = clientService.findByEmail(authentication.getName());
         Card currentCard = cardService.findById(id);
+        boolean exist = current.getCards().contains(currentCard);
+
         if (current == null){
             return new ResponseEntity<>("Client not found", HttpStatus.NOT_FOUND);
 
@@ -104,7 +106,7 @@ public List<CardDTO> getCards(Authentication authentication){
             return new ResponseEntity<>("Card not found.", HttpStatus.NOT_FOUND);
 
         }
-        if (!current.getCards().contains(currentCard)){
+        if (!exist){
             return new ResponseEntity<>("You are not the owner of this card", HttpStatus.FORBIDDEN);
 
         }

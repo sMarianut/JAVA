@@ -7,6 +7,7 @@
     <meta name="description" content="Homepage for the safety of your money!">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" href="./web/styles.css">
     <link rel="shortcut icon" href="./web/images/banklogo.png" type="image/x-icon">
     <title>Home Mindhub Brothers Bank</title>
@@ -24,7 +25,7 @@
             </div>
         </header>
         <h4 class="text-black text-center">Log in or register to your account</h4>
-        <section id="indexL" v-if="showLoginForm">
+        <section id="indexL" class="animate__animated animate__backInLeft animate__fast" v-if="showLoginForm">
             <form class="formI rounded p-3 m-5" @submit.prevent="login">
                 <div class="segment">
                     <h1>Sign up</h1>
@@ -42,7 +43,7 @@
                 </div>
             </form>
         </section>
-        <section id="IndexR" v-else>
+        <section id="IndexR" class="animate__animated animate__backInLeft animate__faster" v-else>
             <form class="formI rounded p-3 m-5" @submit.prevent="register">
                 <div class="segment">
                     <h1>Register</h1>

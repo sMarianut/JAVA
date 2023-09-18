@@ -24,7 +24,6 @@ createApp({
                     this.accounts = res.data.filter(acc => acc.accOn)
                     console.log(this.accounts);
                     localStorage.setItem('client', JSON.stringify(this.clients))
-
                 })
                 .catch(error => console.error(error))
             axios.get('/api/clients/current')
@@ -56,7 +55,8 @@ createApp({
                 title: 'Do you want to create an account?',
                 inputAttributes: { autocapitalize: 'off', },
                 showCancelButton: true, confirmButtonText: 'Yes!',
-                showLoaderOnConfirm: true, preConfirm: login => {
+                showLoaderOnConfirm: true,
+                preConfirm: login => {
                     return axios
                         .post('/api/clients/current/accounts')
                         .then(response => {

@@ -3,6 +3,7 @@ package com.mindhub.homebanking.controllers;
 import com.mindhub.homebanking.dtos.AccountDTO;
 import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.models.Account;
+import com.mindhub.homebanking.models.AccountType;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.models.Transaction;
 import com.mindhub.homebanking.repositories.AccountRepository;
@@ -60,12 +61,12 @@ public class AccountController {
     }
 
     @PostMapping(path = "clients/current/accounts")
-    public ResponseEntity<Object> createAcc(Authentication authentication) {
+    public ResponseEntity<Object> createAcc(Authentication authentication, @RequestParam String type) {
         Client current = clientService.findByEmail(authentication.getName());
         List<Account> filterAcc = accountRepository.findAllByClientAndAccOnTrue(current);
         if (filterAcc.size() <= 2) {
             String numberAcc = Rnumber();
-            Account newAcc = new Account(numberAcc, LocalDate.now(), 0.0, true);
+            Account newAcc = new Account(numberAcc, LocalDate.now(), 0.0, true, AccountType.valueOf(type));
             clientService.findByEmail(authentication.getName()).addAccount(newAcc);
             accountService.addAccount(newAcc);
         } else {

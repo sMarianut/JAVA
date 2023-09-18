@@ -11,6 +11,8 @@ public class TransactionDTO{
     private String description;
     private LocalDateTime date;
     private transactionType type;
+    private double currentBalance;
+    private boolean isOnTransf;
 
     public TransactionDTO() {
     }
@@ -20,6 +22,7 @@ public class TransactionDTO{
         this.type = transaction.getType();
         this.description = transaction.getDescription();
         this.amount = transaction.getAmount();
+        this.currentBalance = transaction.getCurrentBalance();
     }
 
     public Long getId() {
@@ -42,4 +45,11 @@ public class TransactionDTO{
         return type;
     }
 
+    public double getCurrentBalance() {
+        return currentBalance;
+    }
+
+    public boolean isOnTransf() {
+        return isOnTransf;
+    }
 }

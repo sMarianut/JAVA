@@ -40,6 +40,7 @@ createApp({
         },
         showRegister() {
             this.showLoginForm = false;
+
         }
 
     }

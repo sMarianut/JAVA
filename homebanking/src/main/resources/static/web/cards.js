@@ -59,13 +59,31 @@ createApp({
             })
         },
         deleteCard() {
-            console.log();
-            axios.patch('/api/clients/current/deleteCard', `id=${this.idCard}`)
-                .then(res => {
-                    window.location.href = './cards.html'
-                })
-                .catch(error => console.error(error))
-        }
+            Swal.fire({
+                title: 'Are you sure, the card will be removed',
+                inputAttributes: { autocapitalize: 'off', },
+                showCancelButton: true, confirmButtonText: 'Yes!',
+                showLoaderOnConfirm: true,
+                preConfirm: login => {
+                    axios.patch('/api/clients/current/deleteCard', `id=${this.idCard}`)
+                        .then(res => {
+                            Swal.fire({
+                                title: 'Card eliminated',
+                            })
+                            setTimeout(() => {
+                                window.location.href = './cards.html';
+                            }, 1500);
+                        })
+                        .catch(error => {
+                            Swal.fire({
+                                icon: 'error',
+                                text: error.response.data,
+                                confirmButtonColor: '#5b31be93',
+                            });
+                        })
+                }
+            })
+        }, allowOutsideClick: () => !Swal.isLoading(),
 
     }
 }).mount('#app')
