@@ -13,7 +13,8 @@ createApp({
             cardColor: null,
             showForm: false,
             mostrarForm: false,
-            idCard: null
+            idCard: null,
+            dateExp: new Date().toISOString().slice(2, 7).replace(/-/g, '/'),
         }
     },
     created() {
@@ -21,6 +22,7 @@ createApp({
     },
     methods: {
         loadCards() {
+            console.log(this.dateExp);
             axios.get('/api/clients/current/cards')
                 .then(res => {
                     this.clients = res
@@ -30,6 +32,7 @@ createApp({
                     this.credit = this.cards.filter(card => card.cardType == "CREDIT")
                     this.fromDate = this.cards.map(card => card.fromDate.slice(2, 7).replace(/-/g, '/'))
                     this.thruDate = this.cards.map(card => card.thruDate.slice(2, 7).replace(/-/g, '/'))
+                    console.log(this.thruDate);
                 }
                 )
         },

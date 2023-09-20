@@ -275,6 +275,38 @@ h1.h1 {
       1px -1px 0px rgba(0, 0, 0, 0.5);
     z-index: 5;
   }
+  .expiryDate{
+    color: #303030;
+      position: absolute;
+      margin: 0;
+      padding: 0;
+      letter-spacing: 0.3rem;
+      text-transform: uppercase;
+      font-size: 12px;
+      inset: 5%;
+      text-shadow: -1px -1px 0px rgba(255, 255, 255, 0.5),
+        1px -1px 0px rgba(255, 255, 255, 0.5), 1px 1px 0px rgba(0, 0, 0, 0.5),
+        1px -1px 0px rgba(0, 0, 0, 0.5);
+      z-index: 5;
+      top: auto;
+      left: 180px;
+  }
+  .expiryDate2{
+    color: #ff0000;
+      position: absolute;
+      margin: 0;
+      padding: 0;
+      letter-spacing: 0.3rem;
+      text-transform: uppercase;
+      font-size: 12px;
+      inset: 5%;
+      text-shadow: -1px -1px 0px rgba(255, 255, 255, 0.5),
+        1px -1px 0px rgba(255, 255, 255, 0.5), 1px 1px 0px rgba(0, 0, 0, 0.5),
+        1px -1px 0px rgba(0, 0, 0, 0.5);
+      z-index: 5;
+      top: auto;
+      left: 180px;
+  }
   .cardbg{
     background-image: url(./images/card-bg.svg);
     background-size: cover;
@@ -1693,6 +1725,40 @@ button:active {
   color: var(--primary);
 }
 
+.checkbotses {
+  margin-right: calc(var(--ruler) / 2);
+  width: 20px; /* Ancho deseado del checkbox personalizado */
+  height: 20px; /* Altura deseada del checkbox personalizado */
+  background-color: var(--color-white); /* Color de fondo del checkbox */
+  border: 1px solid var(--color-shadow); /* Borde del checkbox */
+  border-radius: 4px; /* Bordes redondeados para el checkbox */
+  cursor: pointer; /* Cambiar el cursor al pasar por encima del checkbox */
+  position: relative;
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.checkbotses::before {
+  content: "\2713"; /* Usamos el código Unicode de una marca de verificación ✓ */
+  font-size: 16px; /* Tamaño de la cruz */
+  color: transparent; /* Inicialmente ocultamos la cruz */
+  position: absolute;
+  top: 50%; /* Alineación vertical de la cruz en el centro */
+  left: 50%; /* Alineación horizontal de la cruz en el centro */
+  transform: translate(-50%, -50%); /* Centramos la cruz */
+  opacity: 0; /* La cruz está oculta inicialmente */
+  transition: opacity 0.2s ease-in-out;
+}
+
+.checkbotses:checked::before {
+  color: var(--color-primary); /* Color de la cruz cuando el checkbox está marcado */
+  opacity: 1; /* Mostrar la cruz cuando el checkbox está marcado */
+}
+
+/* Estilos adicionales para el fondo del checkbox cuando está marcado */
+.checkbotses:checked {
+  background-color: var(--color-primary); /* Cambiar el color de fondo cuando el checkbox está marcado */
+  border-color: var(--color-primary); /* Cambiar el color del borde cuando el checkbox está marcado */
+}
 
 
 

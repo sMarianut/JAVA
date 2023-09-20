@@ -4,15 +4,14 @@ import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
+import com.mindhub.homebanking.dtos.CardPaymentDTO;
 import com.mindhub.homebanking.dtos.TransactionDTO;
-import com.mindhub.homebanking.models.Account;
-import com.mindhub.homebanking.models.Client;
-import com.mindhub.homebanking.models.Transaction;
-import com.mindhub.homebanking.models.transactionType;
+import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.repositories.TransactionRepository;
 import com.mindhub.homebanking.service.AccountService;
+import com.mindhub.homebanking.service.CardService;
 import com.mindhub.homebanking.service.ClientService;
 import com.mindhub.homebanking.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +44,8 @@ public class TransactionController {
     private AccountRepository accountRepository;
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private CardService cardService;
 
     @GetMapping("/transactions/findDate")
     public ResponseEntity<Object> getTransactionsbyDateTime(@RequestParam String dateInit,
@@ -176,8 +177,5 @@ public class TransactionController {
        }
        return new ResponseEntity<>("Transaction succesfully created", HttpStatus.CREATED);
     }
-    @Transactional
-    @PostMapping("/transactions/posnet")
-    public ResponseEntity<Object> cardPayment(@RequestParam long idCard, @RequestBody cardPaymentDTO)
 
 }

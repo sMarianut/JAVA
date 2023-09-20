@@ -8,6 +8,11 @@ createApp({
             lastName: '',
             email: '',
             jsonR: null,
+            showLoan: true,
+            loanName: "",
+            maxAmount: 0,
+            payments: [],
+            interest: 0
 
         }
     },
@@ -39,6 +44,39 @@ createApp({
                 .catch(error => console.error(error))
 
         },
+        createLoan() {
+            let object = {
+                "name": this.loanName,
+                "maxAmount": this.maxAmount,
+                "payments": this.payments,
+                "interest": this.interest
+            }
+            Swal.fire({
+                title: 'Do you want to create this loan?',
+                inputAttributes: { autocapitalize: 'off', },
+                showCancelButton: true, confirmButtonText: 'Yes!',
+                showLoaderOnConfirm: true, preConfirm: login => {
+                    console.log(object);
+                    return axios.post('/api/createLoan', object)
+                        .then(response => {
+                            Swal.fire({
+                                icon: 'success',
+                                title: "Loan created PETON",
+                                confirmButtonColor: '#5b31be93',
+                            })
+                        })
+                        .catch(error => {
+                            Swal.fire({
+                                icon: 'error',
+                                title: "Couldn't apply",
+                                text: error.response.data,
+                                confirmButtonColor: '#5b31be93',
+                            });
+                            console.log(error.response);
+                        });
+                }, allowOutsideClick: () => !Swal.isLoading(),
+            })
+        },
         verifier() {
             if (this.firstName && this.lastName && this.email) {
                 this.addClient();
@@ -46,6 +84,9 @@ createApp({
                 window.alert("Please fill in all required fields.");
 
             }
+        },
+        showLoanForm() {
+            this.showLoan = !this.showLoan
         }
     }
 }).mount('#app');

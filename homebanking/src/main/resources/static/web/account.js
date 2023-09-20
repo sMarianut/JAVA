@@ -61,10 +61,9 @@ createApp({
                     a.click();
                     window.URL.revokeObjectURL(url);
                 })
-                .catch((error) => {
-                    console.log(JSON.stringify(error));
-
-                });
+                .catch(error =>
+                    console.error(error)
+                );
         }
 
     }

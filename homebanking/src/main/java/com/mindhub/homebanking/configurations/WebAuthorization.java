@@ -28,8 +28,9 @@ public class WebAuthorization {
                 .antMatchers("/web/images/**").permitAll()
                 .antMatchers("/index.js").permitAll()
                 .antMatchers("/web/CascadiaCodePL.ttf").permitAll()
-                .antMatchers(HttpMethod.POST,"/api/clients").permitAll()
+                .antMatchers(HttpMethod.POST,"/api/clients","/api/transactions/posnet").permitAll()
                 .antMatchers("/admin/**").hasAnyAuthority("ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/createLoan").hasAnyAuthority("ADMIN")
                 .antMatchers("/rest/**", "/admin/**", "/h2-console/**", "/api/clients","/api/clients/current/accounts").hasAnyAuthority("ADMIN")
                 .antMatchers("/web/accounts.html","/web/cards.html","/web/account.html","/web/accounts.js","/web/account.js","/web/cards.js","/web/error.html","/web/transactions.html","/web/transactions.js","/web/trasnfer.css"
                         ,"/api/loans","/web/loanapp.html","/web/loanapp.js").hasAnyAuthority("CLIENT")
@@ -53,6 +54,7 @@ public class WebAuthorization {
         http.logout()
                 .logoutUrl("/api/logout").deleteCookies("JSESSIONID");
         http.logout().logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());
+        http.cors();
         http.csrf().disable();
         http.headers().frameOptions().disable();
         http.exceptionHandling().authenticationEntryPoint((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));

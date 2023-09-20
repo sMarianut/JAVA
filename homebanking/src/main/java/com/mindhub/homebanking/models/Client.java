@@ -20,6 +20,7 @@ public class Client {
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
     private String firstName;
+
     private String lastName;
     private String email;
     private String password;
@@ -30,12 +31,12 @@ public class Client {
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private Set<ClientLoan> clientLoans = new HashSet<>();
 
+
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private Set<Card> cards = new HashSet<>();
 
 
-    public Client(){};
-
+    public Client(){}
     //sobrecarga de metodos(tipo 1)
     public Client(String firstName, String lastName, String email, String password){
         this.firstName = firstName;
@@ -43,13 +44,14 @@ public class Client {
         this.email = email;
         this.password = password;
     }
-
+    // Métodos accesores
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+
     }
 
     public String getFirstName() {

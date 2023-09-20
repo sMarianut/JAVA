@@ -61,78 +61,38 @@ createApp({
         logout() {
             axios.post('/api/logout')
         }
+    },
+    computed: {
+        calculateInterest() {
+            if (this.payments == 3) {
+                this.finalAmount = this.amount + (this.amount * (0.05 + (this.loanSelect.interest / 100)))
+                return this.finalAmount;
+            }
+            else if (this.payments == 6) {
+                this.finalAmount = this.amount + (this.amount * (0.10 + (this.loanSelect.interest / 100)))
+                return this.finalAmount;
+            }
+            else if (this.payments == 12) {
+                this.finalAmount = this.amount + (this.amount * (0.20 + (this.loanSelect.interest / 100)))
+                return this.finalAmount;
+            }
+            else if (this.payments == 24) {
+                this.finalAmount = this.amount + (this.amount * (0.45 + (this.loanSelect.interest / 100)))
+                return this.finalAmount;
+            }
+            else if (this.payments == 36) {
+                this.finalAmount = this.amount + (this.amount * (0.65 + (this.loanSelect.interest / 100)))
+                return this.finalAmount;
+            }
+            else if (this.payments == 48) {
+                this.finalAmount = this.amount + (this.amount * (0.70 + (this.loanSelect.interest / 100)))
+                return this.finalAmount;
+            }
+            else if (this.payments == 60) {
+                this.finalAmount = this.amount + (this.amount * (0.75 + (this.loanSelect.interest / 100)))
+                return this.finalAmount;
+            } else { return 0 };
+        }
     }
-    // computed: {
-    //     prueba() {
-    //         // console.log(this.amount);
-    //         // console.log(this.accountSelect);
-    //         console.log(this.loanSelect.id);
-    //         console.log(this.loanSelected);
-    //         console.log(this.payments);
-    //     }
-    // }
 
 }).mount('#app');
-
-
-
-// data(){
-//     return{
-//         loans:[],
-//         originAccounts:null,
-//         amount:null,
-//         payments:null,
-//         selectLoan:{},
-//         selectOriginAccount:{},
-//         selectPayments:{}
-//     }
-// },
-// created(){
-//   this.loadData()
-//   this.loadLoans()
-// },
-// computed:{
-//     prueba(){
-//         console.log(this.selectOriginAccount);
-//         console.log(this.selectLoan);
-//     }
-// },
-// methods:{
-//     alerta(){
-//         let mensaje;
-//         let opcion = confirm("Do you want to create a new loan?");
-//         let object = {
-//             "id": this.id,
-//             "amount": this.amount,
-//             "payments": this.payments,
-//             "destinationAccount":this.destinationAccount
-//         }
-//         console.log(object);
-//         console.log("Hola");
-//         if (opcion == true) {
-//             axios.post('/api/loans', object)
-//             .then( response => {
-//               location.href ="/web/public/pages/accounts.html"})
-//               .catch(error => {
-//                 console.log(error.response);
-//                 window.alert(error.response.data)
-//         })
-//         } else {
-//             mensaje = "Cancel";
-//         }
-
-//     },
-//     loadData(){
-//         axios.get('/api/clients/current/accounts')
-//         .then(response=>{
-//             this.originAccounts = response.data
-//             console.log(this.originAccounts);
-//         }).catch(error => console.log(error))
-//     },
-//     loadLoans(){
-//         axios.get('/api/loans')
-//         .then(response=>{
-//             this.loans = response.data
-//             console.log(this.loans);
-//         }).catch(error => console.log(error))
-//     },

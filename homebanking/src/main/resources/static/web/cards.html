@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Cards of the client">
     <title>Client cards</title>
-    <link rel="shortcut icon" href="./images/safe2.svg" type="image/x-icon">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -166,7 +166,12 @@
                                                 CVV: {{card.cvv}}
                                             </label>
                                             <label class="expiry" for="expiryMonth">
-                                                {{fromDate[index]}}-{{thruDate[index]}}
+                                                {{fromDate[index]}}
+                                            </label>
+                                            <label
+                                                :class="{'expiryDate': thruDate[index] > dateExp, 'expiryDate2': thruDate[index] < dateExp}"
+                                                for="expiryMonth">
+                                                {{thruDate[index]}}
                                             </label>
                                             <img class="cardLogo" data-v-5d206127="" data-v-8fcb32d4=""
                                                 style="opacity: 1;"
@@ -226,7 +231,12 @@
                                                 CVV: {{card.cvv}}
                                             </label>
                                             <label class="expiry" for="expiryMonth">
-                                                {{fromDate[index]}}-{{thruDate[index]}}
+                                                {{fromDate[index]}}
+                                            </label>
+                                            <label
+                                                :class="{'expiryDate': thruDate[index] > dateExp, 'expiryDate2': thruDate[index] < dateExp}"
+                                                for="expiryMonth">
+                                                {{thruDate[index]}}
                                             </label>
                                             <img class="cardLogo" data-v-5d206127="" data-v-8fcb32d4=""
                                                 style="opacity: 1;"
@@ -286,7 +296,12 @@
                                                 CVV: {{card.cvv}}
                                             </label>
                                             <label class="expiry" for="expiryMonth">
-                                                {{fromDate[index]}}-{{thruDate[index]}}
+                                                {{fromDate[index]}}
+                                            </label>
+                                            <label
+                                                :class="{'expiryDate': thruDate[index] > dateExp, 'expiryDate2': thruDate[index] < dateExp}"
+                                                for="expiryMonth">
+                                                {{thruDate[index]}}
                                             </label>
                                             <img class="cardLogo" data-v-5d206127="" data-v-8fcb32d4=""
                                                 style="opacity: 1;"
@@ -361,7 +376,12 @@
                                             CVV: {{card.cvv}}
                                         </label>
                                         <label class="expiry" for="expiryMonth">
-                                            {{fromDate[index]}}-{{thruDate[index]}}
+                                            {{fromDate[index]}}
+                                        </label>
+                                        <label
+                                            :class="{'expiryDate': thruDate[index] > dateExp, 'expiryDate2': thruDate[index] < dateExp}"
+                                            for="expiryMonth">
+                                            {{thruDate[index]}}
                                         </label>
                                         <img class="cardLogo" data-v-5d206127="" data-v-8fcb32d4="" style="opacity: 1;"
                                             src="https://simey-credit-card.netlify.app/img/logos/master.svg">
@@ -420,7 +440,12 @@
                                             CVV: {{card.cvv}}
                                         </label>
                                         <label class="expiry" for="expiryMonth">
-                                            {{fromDate[index]}}-{{thruDate[index]}}
+                                            {{fromDate[index]}}
+                                        </label>
+                                        <label
+                                            :class="{'expiryDate': thruDate[index] > dateExp, 'expiryDate2': thruDate[index] < dateExp}"
+                                            for="expiryMonth">
+                                            {{thruDate[index]}}
                                         </label>
                                         <img class="cardLogo" data-v-5d206127="" data-v-8fcb32d4="" style="opacity: 1;"
                                             src="https://simey-credit-card.netlify.app/img/logos/master.svg">
@@ -479,7 +504,12 @@
                                             CVV: {{card.cvv}}
                                         </label>
                                         <label class="expiry" for="expiryMonth">
-                                            {{fromDate[index]}}-{{thruDate[index]}}
+                                            {{fromDate[index]}}
+                                        </label>
+                                        <label
+                                            :class="{'expiryDate': thruDate[index] > dateExp, 'expiryDate2': thruDate[index] < dateExp}"
+                                            for="expiryMonth">
+                                            {{thruDate[index]}}
                                         </label>
                                         <img class="cardLogo" data-v-5d206127="" data-v-8fcb32d4="" style="opacity: 1;"
                                             src="https://simey-credit-card.netlify.app/img/logos/master.svg">
@@ -525,11 +555,15 @@
                 <span v-else>Cancel</span></button>
             <article v-if="mostrarForm" class="d-flex justify-content-center align-items-center flex-column">
                 <label for="deletecard">Select a card</label>
-                <template v-for="(card, index) of credit && debit">
-                    <select name="deletecard" id="" v-model="idCard">Select card to delete
+                <select name="deletecard" id="" v-model="idCard">Select card to delete
+                    <option value="" disabled>Select card number</option>
+                    <template v-for="(card, index) of  debit">
                         <option :value="card.id">{{card.number}}</option>
-                    </select>
-                </template>
+                    </template>
+                    <template v-for="(card, index) of credit">
+                        <option :value="card.id">{{card.number}}</option>
+                    </template>
+                </select>
                 <button @click.prevent="deleteCard">Delete this card </button>
             </article>
 

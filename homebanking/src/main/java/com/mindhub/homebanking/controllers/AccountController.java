@@ -81,7 +81,7 @@ public class AccountController {
         Account currentAcc = accountService.findById(id);
         Set<Account> accounts = current.getAccounts();
         long numberAcc = accounts.stream().filter(account1 -> account1.isAccOn()).count();
-        Set<Transaction> currentAccTransf = currentAcc.getTransactions();
+        Set<Transaction> currentAccTransf = currentAcc.getTransactions().stream().filter(transaction -> transaction.isOnTransf() == true).collect(Collectors.toSet());
         List<Account> filterAcc = accountRepository.findAllByClientAndAccOnTrue(current);
 
         if (current == null) {
@@ -107,7 +107,6 @@ public class AccountController {
             for (Transaction transaction : currentAccTransf) {
                 transaction.setOnTransf(false);
                 transactionService.addTransaction(transaction);
-
             }
                 currentAcc.setAccOn(false);
                 accountService.addAccount(currentAcc);

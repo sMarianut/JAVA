@@ -58,10 +58,10 @@ public class CardsController {
         return cvv;
     }
 
-@GetMapping("/api/clients/current/cards")
-public List<CardDTO> getCards(Authentication authentication){
-    return new ClientDTO(clientService.findByEmail(authentication.getName())).getCards().stream().collect(toList());
-}
+    @GetMapping("/api/clients/current/cards")
+    public List<CardDTO> getCards(Authentication authentication){
+        return new ClientDTO(clientService.findByEmail(authentication.getName())).getCards().stream().collect(toList());
+    }
 
     @PostMapping("/api/clients/current/cards")
     public ResponseEntity<Object> createCard(Authentication authentication,
