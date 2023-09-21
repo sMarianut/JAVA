@@ -23,7 +23,7 @@ public class WebAuthorization {
 
         http.authorizeRequests()
                 .antMatchers("/index.html").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/login","/api/payments").permitAll()
                 .antMatchers("/web/styles.css").permitAll()
                 .antMatchers("/web/images/**").permitAll()
                 .antMatchers("/index.js").permitAll()

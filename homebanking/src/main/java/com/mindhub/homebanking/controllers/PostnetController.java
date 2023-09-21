@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -35,6 +36,7 @@ public class PostnetController {
     @PostMapping("/payments")
     public ResponseEntity<Object> newPayment(@RequestBody CardPaymentDTO cardPaymentDTO){
         String cardNumber = cardPaymentDTO.getNumber();
+        LocalDate date = LocalDate.now();
         if (cardNumber.isBlank()){
             return new ResponseEntity<>("Card number cannot be empty", HttpStatus.FORBIDDEN);
         }
@@ -42,8 +44,14 @@ public class PostnetController {
         if (exist.isOnCard() == false || exist == null){
             return new ResponseEntity<>("This card not exist", HttpStatus.NOT_FOUND);
         }
+        if(exist.getThruDate().isBefore(date)){
+            return new ResponseEntity<>("The card is expired", HttpStatus.FORBIDDEN);
+        }
         if (exist.getCvv() != cardPaymentDTO.getCvv()){
             return new ResponseEntity<>("CVV error, please try again", HttpStatus.BAD_GATEWAY);
+        }
+        if (cardPaymentDTO.getAmountToPay() <= 0){
+            return new ResponseEntity<>("the amount cannot be empty", HttpStatus.FORBIDDEN);
         }
 
         long idClient = exist.getClient().getId();
