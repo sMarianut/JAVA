@@ -27,12 +27,10 @@ createApp({
                 .then(res => {
                     this.clients = res
                     this.cards = res.data.filter(card => card.onCard)
-                    console.log(this.cards);
                     this.debit = this.cards.filter(card => card.cardType == "DEBIT")
                     this.credit = this.cards.filter(card => card.cardType == "CREDIT")
                     this.fromDate = this.cards.map(card => card.fromDate.slice(2, 7).replace(/-/g, '/'))
                     this.thruDate = this.cards.map(card => card.thruDate.slice(2, 7).replace(/-/g, '/'))
-                    console.log(this.thruDate);
                 }
                 )
         },

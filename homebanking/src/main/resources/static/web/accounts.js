@@ -20,18 +20,14 @@ createApp({
         loadData() {
             axios.get('http://localhost:8080/api/clients/current/accounts')
                 .then(res => {
-                    console.log(res);
                     this.accounts = res.data.filter(acc => acc.accOn)
-                    console.log(this.accounts);
                     localStorage.setItem('client', JSON.stringify(this.clients))
                 })
                 .catch(error => console.error(error))
             axios.get('/api/clients/current')
                 .then(res => {
-                    console.log(res.data.loans);
                     this.firstName = res.data.firstName
                     this.loans = res.data.loans
-                    console.log(this.loans);
                     this.loans.sort((a, b) => a.id - b.id)
                 })
                 .catch(error => console.error(error))
@@ -39,9 +35,20 @@ createApp({
         deleteAcc(id) {
             axios.patch('/api/clients/current/deleteAcc', `id=${id}`)
                 .then(res => {
-                    console.log(res);
+                    Swal.fire({
+                        title: 'Account successfuly eliminated',
+                    })
+                    setTimeout(() => {
+                        window.location.href = './accounts.html';
+                    }, 1500);
                 })
-                .catch(error => console.error(error))
+                .catch(error => {
+                    Swal.fire({
+                        icon: 'ERROR',
+                        text: error.response.data,
+                        confirmButtonColor: '#5b31be93',
+                    });
+                })
         }
         ,
         logout() {
@@ -57,19 +64,20 @@ createApp({
                 showCancelButton: true, confirmButtonText: 'Yes!',
                 showLoaderOnConfirm: true,
                 preConfirm: login => {
-                    return axios
-                        .post('/api/clients/current/accounts')
+                    return axios.post('/api/clients/current/accounts', "type=CURRENT")
                         .then(response => {
-                            Swal.fire(
-                                'Good job!',
-                                'You clicked the button!',
-                                'success',
-                                location.href = './accounts.html')
+                            Swal.fire({
+                                title: 'Account created! Enjoy!',
+                            })
+                            setTimeout(() => {
+                                window.location.href = './accounts.html';
+                            }, 1500);
                         })
                         .catch(error => {
+                            console.log(error);
                             Swal.fire({
                                 icon: 'error',
-                                text: error.response.data,
+                                text: error,
                                 confirmButtonColor: '#5b31be93',
                             });
                         });

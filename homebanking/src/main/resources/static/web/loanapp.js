@@ -9,6 +9,7 @@ createApp({
             loanSelect: {},
             loanSelected: {},
             payments: {},
+            finalAmount: 0
         }
     },
     created() {
