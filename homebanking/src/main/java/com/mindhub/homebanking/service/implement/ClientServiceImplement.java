@@ -1,6 +1,7 @@
 package com.mindhub.homebanking.service.implement;
 
 import com.mindhub.homebanking.dtos.ClientDTO;
+import com.mindhub.homebanking.dtos.ClientLoanDTO;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.service.ClientService;
@@ -48,6 +49,11 @@ public class ClientServiceImplement implements ClientService {
     @Override
     public List<ClientDTO> getClientsDTO() {
         return getClients().stream().map(client -> new ClientDTO(client)).collect(toList());
+    }
+
+    @Override
+    public List<ClientLoanDTO> getClientLoans(Client client) {
+        return client.getClientLoans().stream().map(clientLoan -> new ClientLoanDTO(clientLoan)).collect(toList());
     }
 
 }

@@ -1750,16 +1750,53 @@ button:active {
 }
 
 .checkbotses:checked::before {
-  color: var(--color-primary); /* Color de la cruz cuando el checkbox está marcado */
-  opacity: 1; /* Mostrar la cruz cuando el checkbox está marcado */
+  color: var(--color-primary); 
+  opacity: 1; 
 }
 
-/* Estilos adicionales para el fondo del checkbox cuando está marcado */
+
 .checkbotses:checked {
-  background-color: var(--color-primary); /* Cambiar el color de fondo cuando el checkbox está marcado */
-  border-color: var(--color-primary); /* Cambiar el color del borde cuando el checkbox está marcado */
+  background-color: var(--color-primary);
+  border-color: var(--color-primary); 
+}
+.radio-buttons {
+  margin-right: calc(var(--ruler) / 2);
+  width: 20px;
+  height: 20px;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-shadow);
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 }
 
+.radio-buttons::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: transparent;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.radio-buttons:checked::before {
+  content: "\2713"; 
+  font-size: 16px;
+  color: var(--color-primary);
+  opacity: 1;
+}
+
+
+.radio-buttons:checked {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
 
 
 

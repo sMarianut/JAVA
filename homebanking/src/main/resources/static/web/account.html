@@ -120,7 +120,7 @@
                             <th class="text-dark" scope="col">Description</th>
                             <th class="text-dark" scope="col">Date</th>
                             <th class="text-dark" scope="col">Amount</th>
-                            <th class="text-dark" scope="col">Account balance</th>
+                            <th class="text-dark text-break" scope="col">Account balance</th>
                         </tr>
                         <thead>
                         <tbody>
@@ -159,7 +159,9 @@
                     </div>
                 </div>
             </article>
-            <button @click.prevent="showSearch">Search transactions</button>
+            <div class="d-flex justify-content-center">
+                <button @click.prevent="showSearch">Search transactions</button>
+            </div>
             <article>
                 <form v-if="showForm" action="">
                     <label for="date1">Put the date from:</label>

@@ -1,6 +1,7 @@
 package com.mindhub.homebanking.service;
 
 import com.mindhub.homebanking.dtos.ClientDTO;
+import com.mindhub.homebanking.dtos.ClientLoanDTO;
 import com.mindhub.homebanking.models.Client;
 import org.springframework.stereotype.Service;
 
@@ -16,4 +17,6 @@ public interface ClientService {
     ClientDTO getClientDTO(String email);
     List<Client> getClients();
     List<ClientDTO> getClientsDTO();
+
+    List<ClientLoanDTO> getClientLoans(Client client);
 }

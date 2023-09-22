@@ -36,7 +36,7 @@ public class WebAuthorization {
                         ,"/api/loans","/web/loanapp.html","/web/loanapp.js").hasAnyAuthority("CLIENT")
                 .antMatchers(HttpMethod.POST,"/api/transactions","/api/loans").hasAnyAuthority("CLIENT")
                 .antMatchers(HttpMethod.PATCH,"/api/clients/current/deleteAcc", "/api/clients/current/deleteCard").hasAnyAuthority("CLIENT")
-                .antMatchers("/api/clients/current","/api/clients/current/cards","/api/clients/current/accounts","/api/clients/current/account.html","/api/clients/current/accounts/{id}", "/api/transactions/findDate").hasAnyAuthority("CLIENT")
+                .antMatchers("/api/clients/current","/api/clients/current/cards","/api/clients/current/accounts","/api/clients/current/account.html","/api/clients/current/accounts/{id}", "/api/transactions/findDate","/api/clients/current/loans").hasAnyAuthority("CLIENT")
                 .anyRequest().denyAll();
 
 

@@ -14,7 +14,8 @@ createApp({
             showForm: false,
             dateInit: null,
             dateEnd: null,
-            numberAcc: null
+            numberAcc: null,
+            errorMessage: null
         }
     },
     created() {
@@ -27,11 +28,8 @@ createApp({
             this.idAccount = searchP.get('id')
             axios.get('/api/clients/current/accounts/' + this.idAccount)
                 .then(res => {
-                    console.log(res);
                     this.numberAcc = res.data.number
-                    console.log(this.numberAcc);
                     this.transactions = res.data.transactions
-                    console.log(this.transactions);
                     this.date = this.transactions.map(tr => tr.date.slice(0, -16).replace(/-/g, '/'))
                     this.hour = this.transactions.map(tr => tr.date.slice(11, -7))
                     this.dateForm.hour = this.hour
@@ -61,10 +59,13 @@ createApp({
                     a.click();
                     window.URL.revokeObjectURL(url);
                 })
-                .catch(error =>
-                    console.error(error)
-                );
-        }
+                .catch(error => {
+                    console.log(error.response.data.text()
+                        .then(res => {
+                            console.log(res);
+                        }));
 
+                })
+        }
     }
 }).mount('#app')

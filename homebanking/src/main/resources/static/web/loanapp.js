@@ -46,7 +46,14 @@ createApp({
                 showLoaderOnConfirm: true, preConfirm: login => {
                     console.log(object);
                     return axios.post('/api/loans', object)
-                        .then(response => { window.location.href = './loanapp.html' })
+                        .then(response => {
+                            Swal.fire({
+                                title: 'Loan aproved! Enjoy!',
+                            })
+                            setTimeout(() => {
+                                window.location.href = './accounts.html';
+                            }, 1500);
+                        })
                         .catch(error => {
                             Swal.fire({
                                 icon: 'error',
