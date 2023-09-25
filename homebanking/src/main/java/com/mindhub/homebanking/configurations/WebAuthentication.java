@@ -1,5 +1,6 @@
 package com.mindhub.homebanking.configurations;
 import com.mindhub.homebanking.models.Client;
+import com.mindhub.homebanking.models.RolType;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -24,14 +25,9 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
         auth.userDetailsService(inputName-> {
             Client client = clientRepository.findByEmail(inputName);
             if (client != null) {
-                if (client.getEmail().contains("@admSpecific445MB.com")){
-                    return new User(client.getEmail(), client.getPassword(),
-                            AuthorityUtils.createAuthorityList("ADMIN"));
-                }else {
                 return new User(client.getEmail(), client.getPassword(),
-                        AuthorityUtils.createAuthorityList("CLIENT"));
-                }
-            }else {
+                        AuthorityUtils.createAuthorityList(client.getRolType().toString()));
+            }else{
                 throw new UsernameNotFoundException("Unknown user: " + inputName);
             }
         });

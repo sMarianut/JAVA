@@ -4,12 +4,13 @@ createApp({
         return {
             loans: [],
             accountDest: null,
-            amount: null,
+            amount: 0,
             accountSelect: {},
             loanSelect: {},
             loanSelected: {},
             payments: {},
-            finalAmount: 0
+            finalAmount: 0,
+            active: null
         }
     },
     created() {
@@ -17,6 +18,15 @@ createApp({
         this.loadLoans()
     },
     methods: {
+        hoverLoan(loanSelect) {
+            this.active = loanSelect;
+        },
+        unhoverLoan() {
+            this.active = null;
+        },
+        isCardActive(loanSelect) {
+            return this.active === loanSelect;
+        },
         loadAcc() {
             axios.get('/api/clients/current/accounts')
                 .then(response => {
@@ -29,7 +39,6 @@ createApp({
             axios.get('/api/loans')
                 .then(response => {
                     this.loans = response.data
-                    console.log(this.loans);
                 }).catch(error => console.log(error))
         },
         appLoan() {
@@ -40,30 +49,39 @@ createApp({
                 "accountDest": this.accountSelect
             }
             Swal.fire({
-                title: 'Do you want to apply to this loan, bro?',
+                title: 'Do you want to apply this loan?',
                 inputAttributes: { autocapitalize: 'off', },
-                showCancelButton: true, confirmButtonText: 'Yes!',
-                showLoaderOnConfirm: true, preConfirm: login => {
-                    console.log(object);
-                    return axios.post('/api/loans', object)
-                        .then(response => {
-                            Swal.fire({
-                                title: 'Loan aproved! Enjoy!',
+                showCancelButton: true,
+                confirmButtonText: 'Yes!',
+                confirmButtonColor: '#663399',
+                showLoaderOnConfirm: true, preConfirm: login =>
+                    setTimeout(() => {
+                        axios.post('/api/loans', object)
+                            .then(response => {
+                                Swal.close();
+
+                                Swal.fire({
+                                    title: 'Loan App! Enjoy!',
+                                    confirmButtonText: 'OK',
+                                    confirmButtonColor: '#663399',
+                                });
+
+                                setTimeout(() => {
+                                    window.location.href = './cards.html';
+                                }, 1500);
                             })
-                            setTimeout(() => {
-                                window.location.href = './accounts.html';
-                            }, 1500);
-                        })
-                        .catch(error => {
-                            Swal.fire({
-                                icon: 'error',
-                                title: "Couldn't apply",
-                                text: error.response.data,
-                                confirmButtonColor: '#5b31be93',
+                            .catch(error => {
+                                Swal.close();
+
+                                Swal.fire({
+                                    icon: 'error',
+                                    text: error.response.data,
+                                    confirmButtonColor: '#663399',
+                                });
+
+                                console.log(error.response);
                             });
-                            console.log(error.response);
-                        });
-                }, allowOutsideClick: () => !Swal.isLoading(),
+                    }, 1000)
             })
         },
         logout() {

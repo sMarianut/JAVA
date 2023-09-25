@@ -50,7 +50,6 @@ createApp({
             axios
                 .get(url, { responseType: 'blob' })
                 .then((response) => {
-                    console.log(response);
                     const blob = new Blob([response.data], { type: 'application/pdf' });
                     const url = window.URL.createObjectURL(blob);
                     const a = document.createElement('a');

@@ -153,6 +153,8 @@
                     </div>
                 </template>
             </article>
+            <button v-if="accounts.length <= 2" @click.prevent="createAcc">CREATE AN ACCOUNT</button>
+            </section>
             <article class="col-12 d-flex justify-content-evenly align-items-center p-3 gap-3">
                 <div class="d-flex flex-column flex-md-row gap-5">
                     <a href="./transactions.html">
@@ -188,35 +190,27 @@
                 </div>
             </article>
             <!-- <h4 class="text-black">Saving with us is the best option in the all CORDON INDUSTRIAL PA</h4> -->
-            </article>
-            <button @click.prevent="createAcc">CREATE AN ACCOUNT</button>
-            </section>
             <h4>Your Loans:</h4>
             <section
                 class="loans boxLoans d-flex flex-md-row flex-column gap-5 justify-content-center align-items-center col-12 container"
                 v-if="loans.length > 0">
                 <template v-for="loan of loans">
-                    <div class="cardLoan container">
-                        <div class="circle">
-                            <p>{{loan.name}}</p><span></span>
+                    <div class="cardLoans" @mouseover="hoverLoan(loan)" @mouseleave="unhoverLoan(loan)"
+                        :class="{ active: isCardActive(loan) }">
+                        <div class="cardLoans-title fs-4"><i class="bi bi-cash-coin text-success"></i> {{loan.name}}
                         </div>
-                        <div class="circle"></div>
-                        <div :class="{'cardLoan-inner': loan.name == 'Automotive', 'cardLoan2-inner': loan.name == 'Personal', 'cardLoan3-inner': loan.name == 'Mortgage'}"
-                            class="d-flex justify-content-center flex-column align-items-center">
-                            <i class="bi bi-cash-coin text-black"></i>
-                            <p class="text-black">The amount of this loan is:</p>
-                            <h6>${{loan.amount}}</h6>
-                            <p class="text-black">The number of payments is:</p>
-                            <h6>{{loan.payments}}</h6>
+                        <div class="cardLoans-description">
+                            <p class="text-light">Amount:${{loan.amount.toLocaleString()}}<br>Payments:{{loan.payments}}
+                            </p>
                         </div>
                     </div>
                 </template>
-                <a href="./loanapp.html"><button v-if="loans.length < 3">CREATE A LOAN</button></a>
             </section>
             <div v-else>
                 <h4>You don't have loans, bro</h4>
                 <a href="./loanapp.html"><button>Get a loan!</button></a>
             </div>
+            <a href="./loanapp.html"><button v-if="loans.length < 3">CREATE A LOAN</button></a>
 
         </main>
         <footer>

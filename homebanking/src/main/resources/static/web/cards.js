@@ -19,13 +19,12 @@ createApp({
     },
     created() {
         this.loadCards()
+        this.loadData()
     },
     methods: {
         loadCards() {
-            console.log(this.dateExp);
             axios.get('/api/clients/current/cards')
                 .then(res => {
-                    this.clients = res
                     this.cards = res.data.filter(card => card.onCard)
                     this.debit = this.cards.filter(card => card.cardType == "DEBIT")
                     this.credit = this.cards.filter(card => card.cardType == "CREDIT")
@@ -34,6 +33,14 @@ createApp({
                 }
                 )
         },
+        loadData() {
+            axios.get('/api/clients/current')
+                .then(res => {
+                    this.client = res.data.firstName
+                    console.log(this.client);
+                })
+        }
+        ,
         toggleForm() {
             this.showForm = !this.showForm
         },
@@ -44,16 +51,26 @@ createApp({
             Swal.fire({
                 title: 'Do you want to create a new card?',
                 inputAttributes: { autocapitalize: 'off', },
-                showCancelButton: true, confirmButtonText: 'Yes!',
+                showCancelButton: true,
+                confirmButtonText: 'Yes!',
+                confirmButtonColor: '#663399',
                 showLoaderOnConfirm: true, preConfirm: login => {
                     return axios.post('/api/clients/current/cards', `cardType=${this.cardType}&cardColor=${this.cardColor}`, { headers: { 'content-type': 'application/x-www-form-urlencoded' } })
-                        .then(response => { window.location.href = './cards.html' })
+                        .then(res => {
+                            Swal.fire({
+                                title: 'Card created! Enjoy!',
+                                confirmButtonText: 'OK',
+                                confirmButtonColor: '#663399',
+                            })
+                            setTimeout(() => {
+                                window.location.href = './cards.html';
+                            }, 1500);
+                        })
                         .catch(error => {
                             Swal.fire({
                                 icon: 'error',
-                                title: "ERROR",
                                 text: error.response.data,
-                                confirmButtonColor: '#5b31be93',
+                                confirmButtonColor: '#663399',
                             });
                         });
                 }, allowOutsideClick: () => !Swal.isLoading(),
@@ -63,7 +80,9 @@ createApp({
             Swal.fire({
                 title: 'Are you sure, the card will be removed',
                 inputAttributes: { autocapitalize: 'off', },
-                showCancelButton: true, confirmButtonText: 'Yes!',
+                showCancelButton: true,
+                confirmButtonText: 'Yes!',
+                confirmButtonColor: '#663399',
                 showLoaderOnConfirm: true,
                 preConfirm: login => {
                     axios.patch('/api/clients/current/deleteCard', `id=${this.idCard}`)
@@ -79,7 +98,7 @@ createApp({
                             Swal.fire({
                                 icon: 'error',
                                 text: error.response.data,
-                                confirmButtonColor: '#5b31be93',
+                                confirmButtonColor: '#663399',
                             });
                         })
                 }

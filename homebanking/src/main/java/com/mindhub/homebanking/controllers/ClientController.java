@@ -6,6 +6,7 @@ import com.mindhub.homebanking.dtos.ClientLoanDTO;
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.AccountType;
 import com.mindhub.homebanking.models.Client;
+import com.mindhub.homebanking.models.RolType;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.service.AccountService;
@@ -44,7 +45,6 @@ public class ClientController{
     }
 
     @RequestMapping(path = "/clients", method = RequestMethod.POST)
-
     public ResponseEntity<Object> register(
             @RequestParam String firstName, @RequestParam String lastName,
             @RequestParam String email, @RequestParam String password) {
@@ -60,14 +60,12 @@ public class ClientController{
         if (password.isBlank()){
             return new ResponseEntity<>("Password cannot be empty", HttpStatus.FORBIDDEN);
         }
-
         if (clientService.findByEmail(email) !=  null) {
-
             return new ResponseEntity<>("This email is already in use, BRODER", HttpStatus.FORBIDDEN);
         }
         String number = Rnumber();
         Account newAccount = new Account(number, this.creationDate ,0, true, AccountType.CURRENT);
-        Client newClient = new Client(firstName,lastName,email,passwordEncoder.encode(password));
+        Client newClient = new Client(firstName,lastName,email,passwordEncoder.encode(password), RolType.CLIENT);
         clientService.addClient(newClient);
         newClient.addAccount(newAccount);
         accountService.addAccount(newAccount);
@@ -92,6 +90,18 @@ public class ClientController{
         return clientService.getClientLoans(current);
     }
 
-
-
+    //Un servlet solo para admins, que reciba como parametro un id, busque por id un Client y le cambie el rol a admin
+    @PatchMapping("/admin/setRol")
+    public ResponseEntity<Object> setRol(@RequestParam long id){
+        Client newRol = clientService.findById(id);
+        if(newRol == null){
+            return new ResponseEntity<>("Client doesn't exist.", HttpStatus.NOT_FOUND);
+        }
+        if (newRol.getRolType() == RolType.ADMIN){
+            return new ResponseEntity<>("Cannot change rol of admins", HttpStatus.FORBIDDEN);
+        }
+        newRol.setRolType(RolType.ADMIN);
+        clientService.addClient(newRol);
+        return new ResponseEntity<>("New rol setted, " + newRol.getFirstName() + "is now an admin", HttpStatus.ACCEPTED);
+    }
 }

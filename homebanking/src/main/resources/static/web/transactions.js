@@ -32,13 +32,26 @@ const options = {
         },
         transaction() {
             Swal.fire({
-                title: 'Do you want to transfer, bro?',
+                title: 'Do you want to transfer?',
                 inputAttributes: { autocapitalize: 'off', },
                 showCancelButton: true, confirmButtonText: 'Yes!',
                 showLoaderOnConfirm: true, preConfirm: login => {
                     return axios.post('/api/transactions', `amount=${this.amount}&description=${this.description}&originAccountNumber=${this.accountOrigin}&destinationAccountNumber=${this.accountDest}`)
-                        .then(response => { window.location.href = './transactions.html' })
+                        .then(response => {
+                            Swal.close();
+
+                            Swal.fire({
+                                title: 'Transfer success!',
+                                confirmButtonText: 'OK',
+                                confirmButtonColor: '#663399',
+                            });
+
+                            setTimeout(() => {
+                                window.location.href = './transactions.html';
+                            }, 1500);
+                        })
                         .catch(error => {
+                            console.log(error);
                             Swal.fire({
                                 icon: 'error',
                                 title: "ERROR",

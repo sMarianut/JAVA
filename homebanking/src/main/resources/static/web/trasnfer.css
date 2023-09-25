@@ -405,6 +405,9 @@
   .selectAcc, .inputsP{
     height: 40px;
   }
+  .selectAcc1{
+    height: 30px;
+  }
   .trasnferS{
     background-image: url(./images/trasnfer-bg.svg);
     background-size: cover;
@@ -540,4 +543,195 @@ button:hover {
 button:active {
   box-shadow: inset 1px 1px 2px var(--color-shadow),
     inset -1px -1px 2px var(--color-white);
+}
+.backgrounsd{
+  background-color: rgb(211, 211, 211);
+}
+
+/* Estilo para la imagen */
+.image-wrapper {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.section-image {
+  width: 30vw;
+  height: 20vh;
+  margin-right: 20px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px black;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Sombreado semi-transparente */
+  opacity: 0; /* Inicialmente oculto */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease;
+}
+
+.benefit-text {
+  color: #fff;
+  text-align: center;
+  font-size: 18px;
+}
+
+.image-wrapper:hover {
+  transform: scale(1.1); /* Zoom al 110% en hover */
+  box-shadow: 5px 5px 20px black; /* Aumentar la sombra en hover */
+}
+
+.image-wrapper:hover .overlay {
+  opacity: 1; /* Mostrar el overlay en hover */
+}
+
+
+/* Estilo para el texto en negrita */
+.section-text {
+    font-weight: bold;
+    font-size: 18px;
+}
+.loanRequest{
+  background-image: url(./images/loan-bg.svg);
+  border-radius: 10px;
+  box-shadow: #000000 0 0 10px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.optionss>option{
+  height: 150px !important;
+}
+.backgroundCards{
+  border-radius: 10px;
+  background-image: url(./images/loan-bg.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.cardLoans {
+  width: 230px;
+  height: 300px;
+  background-image: url(./images/rose-petals.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out, filter 0.3s ease-in-out;
+}
+
+.cardLoans-description {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 10px;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out, filter 0.3s ease-in-out; /* Agregamos transiciones para el efecto de fade y sombreado */
+  }
+
+
+.cardLoans:hover .cardLoans-description {
+transform: translateY(-10px);
+opacity: 1; /* Hacemos que la descripción aparezca con un efecto de fade */
+filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5)); /* Agregamos un sombreado */
+}
+.cardLoans:hover {
+  transform: scale(1.05);
+  filter: blur(-2px); /* Desenfocamos la tarjeta cuando está activa */
+}
+.cardLoans:not(.active) {
+  filter: blur(2px); /* Desenfocamos las tarjetas que no están activas */
+}
+.switchTransfer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.switchTransfer-label {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.switchTransfer {
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  position: relative;
+}
+
+.switchTransfer input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switchTransfer-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.switchTransfer-slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .switchTransfer-slider {
+  background-color: #2196F3;
+}
+
+input:focus + .switchTransfer-slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .switchTransfer-slider:before {
+  transform: translateX(26px);
+}
+
+/* Estilos adicionales para personalizar los valores del switchTransfer */
+.switchTransfer-label-left {
+  color: #999;
+}
+
+.switchTransfer-label-right {
+  color: #2196F3;
+}
+
+.switchTransfer-container {
+  position: absolute;
+  top: 90%; /* Ajusta este valor según sea necesario */
+  right: 73%; /* Ajusta este valor según sea necesario */
+  margin: 10px;
+  text-align: center;
 }

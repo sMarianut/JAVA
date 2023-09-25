@@ -101,7 +101,7 @@ public class AccountController {
             return new ResponseEntity<>("You cannot delete an account with issues", HttpStatus.FORBIDDEN);
         }
         if (currentAcc.getBalance() > 0){
-            return new ResponseEntity<>("You cannot delete an account with cash in it. Do you want to transfer to another account?", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("You cannot delete an account with cash in it", HttpStatus.FORBIDDEN);
         }
         else {
             for (Transaction transaction : currentAccTransf) {

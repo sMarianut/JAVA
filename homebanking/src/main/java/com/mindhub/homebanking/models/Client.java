@@ -20,10 +20,10 @@ public class Client {
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
     private String firstName;
-
     private String lastName;
     private String email;
     private String password;
+    private RolType rolType;
     @OneToMany(mappedBy="client", fetch=FetchType.EAGER)
     private Set<Account> accounts = new HashSet<>();
 
@@ -37,12 +37,13 @@ public class Client {
 
 
     public Client(){}
-    //sobrecarga de metodos(tipo 1)
-    public Client(String firstName, String lastName, String email, String password){
+    //sobrecarga de metodos(tipo 1), sobreescritura de metodos.
+    public Client(String firstName, String lastName, String email, String password, RolType rolType) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.rolType = rolType;
     }
     // Métodos accesores
     public String getPassword() {
@@ -126,7 +127,13 @@ public class Client {
         cards.add(card);
     }
 
+    public RolType getRolType() {
+        return rolType;
+    }
 
+    public void setRolType(RolType rolType) {
+        this.rolType = rolType;
+    }
 
     @Override
     public String toString() {

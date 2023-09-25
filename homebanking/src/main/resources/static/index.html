@@ -24,50 +24,58 @@
                 <button class="botonn" @click.prevent="showRegister">New? Register now!</button>
             </div>
         </header>
-        <h4 class="text-black text-center">Log in or register to your account</h4>
-        <section id="indexL" class="animate__animated animate__backInLeft animate__fast" v-if="showLoginForm">
-            <form class="formI rounded p-3 m-5" @submit.prevent="login">
-                <div class="segment">
-                    <h1>Sign up</h1>
-                </div>
 
-                <label>
-                    <input type="email" id="email" name="email" v-model="email" placeholder="Email Address" />
-                </label>
-                <label>
-                    <input type="password" id="password" name="password" v-model="password" placeholder="Password" />
-                </label>
-                <button class="red" type="submit"><i class="icon ion-md-lock"></i> Log in</button>
+        <h4 class="text-black text-center pb-5 mb-5">Log in or register to your account</h4>
+        <div class="animate__animated animate__bounceInUp rounded-form col-12 d-flex justify-content-center align-items-center"
+            v-if="showLoginForm">
+            <div class="col-7 regForm d-flex flex-column align-items-center justify-content-center">
+                <h3 class="fs-3 regText ms-5 text-end text-black text-decoration-underline ms-5">LOG IN ACCOUNT!
+                </h3>
+                <img class="imgForm" src="./web/images/registerform.jpg" alt="">
+            </div>
+            <form action="">
+                <label for="name">Email:</label>
+                <input type="email" class="mb-3" id="email" name="email" v-model="email" placeholder="Email Address"
+                    required>
+
+                <label for="password">Password</label>
+                <input type="password" class="mb-3" id="password" name="password" placeholder="Password"
+                    v-model="password" required>
+
+                <button type="submit" class="button d-flex justify-content-center pe-4 mb-3" value="Log In"
+                    @click.prevent="login">Login</button>
                 <div>
                     <a @click.prevent="showRegister" href="#">Don't have an account? Register here</a>
                 </div>
             </form>
-        </section>
-        <section id="IndexR" class="animate__animated animate__backInLeft animate__faster" v-else>
-            <form class="formI rounded p-3 m-5" @submit.prevent="register">
-                <div class="segment">
-                    <h1>Register</h1>
-                </div>
+        </div>
+        <div class="animate__animated animate__bounceInUp rounded-form col-12 d-flex justify-content-center align-items-center"
+            v-else>
+            <div class="col-7 regForm d-flex flex-column align-items-center justify-content-center">
+                <h3 class="fs-3 regText text-center text-black text-decoration-underline">REGISTER NEW ACCOUNT!
+                </h3>
+                <img class="imgForm" src="./web/images/registerform.jpg" alt="">
+            </div>
+            <form action="">
+                <label for="first-name">First name:</label>
+                <input type="text" id="first-name" name="first-name" required v-model="firstName">
 
-                <label>
-                    <input type="text" id="firstName" name="firstName" v-model="firstName" placeholder="First Name" />
-                </label>
-                <label>
-                    <input type="text" id="lastName" name="lastName" v-model="lastName" placeholder="Last Name" />
-                </label>
+                <label for="last-name">Last name:</label>
+                <input type="text" id="last-name" name="last-name" required v-model="lastName">
 
-                <label>
-                    <input type="email" name="email" v-model="email" placeholder="Your Email" />
-                </label>
-                <label>
-                    <input type="password" id="password" name="password" v-model="password" placeholder="Password" />
-                </label>
-                <button class="red" type="submit"><i class="icon ion-md-lock"></i>Register</button>
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email" required v-model="email">
+
+                <label for="password">Password:</label>
+                <input type="password" class="mb-3" id="password" name="password" required v-model="password">
+
+                <button type="submit" class="button d-flex justify-content-center pe-4 text-center" value="Log In"
+                    @click.prevent="register">Register</button>
                 <div>
                     <a @click.prevent="showLogin" href="#">Have an account?</a>
                 </div>
             </form>
-        </section>
+        </div>
         <footer>
             <div class="footer">
                 <div class="d-flex justify-content-center gap-5 socialM">

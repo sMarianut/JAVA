@@ -3,13 +3,14 @@ createApp({
     data() {
         return {
             clients: null,
-            accounts: null,
+            accounts: [],
             firstName: '',
             creationDate: '',
             number: '',
             balance: Number,
             loans: [],
-            selectedAccountTypes: null
+            selectedAccountTypes: null,
+            active: null
         }
     },
     created() {
@@ -19,10 +20,20 @@ createApp({
 
     },
     methods: {
+        hoverLoan(loan) {
+            this.active = loan;
+        },
+        unhoverLoan() {
+            this.active = null;
+        },
+        isCardActive(loan) {
+            return this.active === loan;
+        },
         loadData() {
             axios.get('http://localhost:8080/api/clients/current/accounts')
                 .then(res => {
                     this.accounts = res.data.filter(acc => acc.accOn)
+                    console.log(this.accounts);
                     this.accounts = this.accounts.sort((a, b) => a.id - b.id)
                     localStorage.setItem('client', JSON.stringify(this.clients))
                 })
@@ -33,23 +44,36 @@ createApp({
                 })
                 .catch(error => console.error(error))
         },
+        //confirmButtonColor: '#3085d6',
         deleteAcc(id) {
-            axios.patch('/api/clients/current/deleteAcc', `id=${id}`)
-                .then(res => {
-                    Swal.fire({
-                        title: 'Account successfuly eliminated',
-                    })
-                    setTimeout(() => {
-                        window.location.href = './accounts.html';
-                    }, 1200);
-                })
-                .catch(error => {
-                    Swal.fire({
-                        icon: 'ERROR',
-                        text: error.response.data,
-                        confirmButtonColor: '#5b31be93',
-                    });
-                })
+            Swal.fire({
+                title: 'Are you sure? The account will be removed.',
+                inputAttributes: { autocapitalize: 'off', },
+                showCancelButton: true,
+                confirmButtonText: 'Yes!',
+                confirmButtonColor: '#663399',
+                showLoaderOnConfirm: true,
+                preConfirm: login => {
+                    axios.patch('/api/clients/current/deleteAcc', `id=${id}`)
+                        .then(res => {
+                            Swal.fire({
+                                title: 'Account successfuly eliminated',
+                                confirmButtonText: 'OK',
+                                confirmButtonColor: '#663399',
+                            })
+                            setTimeout(() => {
+                                window.location.href = './accounts.html';
+                            }, 1200);
+                        })
+                        .catch(error => {
+                            Swal.fire({
+                                icon: 'error',
+                                text: error.response.data,
+                                confirmButtonColor: '#663399',
+                            });
+                        })
+                }
+            })
         },
         logout() {
             axios.post('http://localhost:8080/api/logout')
@@ -64,7 +88,9 @@ createApp({
                     '<label><input class="radio-buttons" type="radio" name="accountType" value="CURRENT"> Current Account</label><br>' +
                     '<label><input class="radio-buttons" type="radio" name="accountType" value="SAVINGS"> Savings Account</label>',
                 inputAttributes: { autocapitalize: 'off', },
-                showCancelButton: true, confirmButtonText: 'Yes!',
+                showCancelButton: true,
+                confirmButtonText: 'Yes!',
+                confirmButtonColor: '#663399',
                 showLoaderOnConfirm: true,
                 preConfirm: login => {
                     const selectedAccountType = document.querySelector('input[name="accountType"]:checked')

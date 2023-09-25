@@ -65,28 +65,33 @@ public class CardsController {
 
     @PostMapping("/api/clients/current/cards")
     public ResponseEntity<Object> createCard(Authentication authentication,
-                                             @RequestParam CardType cardType,
-                                             @RequestParam CardColor cardColor) {
+                                             @RequestParam String cardType,
+                                             @RequestParam String cardColor) {
         String clientA = (authentication.getName());
         Client current = clientService.findByEmail(clientA);
-        List<CardType> currentTypes = current.getCards().stream().map(card -> card.getCardType()).collect(toList());
-        List<CardColor> currentColors = current.getCards().stream().map(card -> card.getCardColor()).collect(toList());
-        List<Card> filterCard = cardRepository.findByClientAndIsOnCardTrue(current);
-
-
-
+        if(cardType.isBlank() ){
+            return new ResponseEntity<>("You cannot apply for a card with blank values.", HttpStatus.FORBIDDEN);
+        }
+        if(cardColor.isBlank() ){
+            return new ResponseEntity<>("You cannot apply for a card with blank values.", HttpStatus.FORBIDDEN);
+        }
+        CardType.valueOf(cardType);
+        CardColor.valueOf(cardColor);
         if (cardType == null || cardColor == null) {
             return new ResponseEntity<>("You has to fill all the requirements.", HttpStatus.FORBIDDEN);
 
         }
+        List<CardType> currentTypes = current.getCards().stream().map(card -> card.getCardType()).collect(toList());
+        List<CardColor> currentColors = current.getCards().stream().map(card -> card.getCardColor()).collect(toList());
+        List<Card> filterCard = cardRepository.findByClientAndIsOnCardTrue(current);
         for (Card card : filterCard) {
-            if (card.getCardType().equals(cardType) && card.getCardColor().equals(cardColor)) {
+            if (card.getCardType().equals(CardType.valueOf(cardType)) && card.getCardColor().equals(CardColor.valueOf(cardColor))) {
                 return new ResponseEntity<>("You already have this card.", HttpStatus.FORBIDDEN);
             }
         }
         String number = CardNumber();
         int cvvR = cvv();
-        Card newCard = new Card(current.getFirstName()+" "+current.getLastName(), cardType, cardColor, number,cvvR, LocalDate.now(), LocalDate.now().plusYears(5), true);
+        Card newCard = new Card(current.getFirstName()+" "+current.getLastName(), CardType.valueOf(cardType), CardColor.valueOf(cardColor), number,cvvR, LocalDate.now(), LocalDate.now().plusYears(5), true);
         current.addCards(newCard);
         clientService.addClient(current);
         cardService.addCard(newCard);
